@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { NfzModule } from './nfz/nfz.module';
+import { NfzModule } from './modules/nfz/nfz.module';
 
 @Module({
   imports: [NfzModule],
