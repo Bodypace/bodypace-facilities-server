@@ -19,8 +19,6 @@ describe('NfzQueuesController (e2e)', () => {
     return request(app.getHttpServer())
       .get('/nfz/queues')
       .expect(200)
-      .expect(
-        'returns all queues to healthcare benefits provided by NFZ in Poland',
-      );
+      .expect('fetch all queues to a given benefit provided by NFZ in Poland');
   });
 });
