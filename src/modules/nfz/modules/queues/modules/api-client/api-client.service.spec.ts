@@ -111,5 +111,32 @@ describe('NfzQueuesApiClientService ', () => {
         );
       });
     });
+
+    describe('called with query that is invalid - province code is not in range [1,16]', () => {
+      beforeEach(() => {
+        query = {
+          case: 1,
+          benefitForChildren: 'false',
+          benefit: 'endokrynolog',
+          locality: 'KATOWICE',
+        };
+      });
+
+      it('should throw an error which explains that province code cannot be lesser than 1', () => {
+        expect(() =>
+          nfzQueuesApiClientService.fetchAll({ ...query, province: 0 }),
+        ).toThrow(
+          'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
+        );
+      });
+
+      it('should throw an error which explains that province code cannot be greater than 16', () => {
+        expect(() =>
+          nfzQueuesApiClientService.fetchAll({ ...query, province: 17 }),
+        ).toThrow(
+          'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
+        );
+      });
+    });
   });
 });

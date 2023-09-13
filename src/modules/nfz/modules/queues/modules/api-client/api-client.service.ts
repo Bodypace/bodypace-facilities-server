@@ -8,6 +8,14 @@ export class NfzQueuesApiClientService {
   private validateQuery(query: NfzQueuesApiQuery): void {
     this.logger.debug(`#validateQuery() query = ${JSON.stringify(query)}`);
 
+    if (
+      query.province !== undefined &&
+      query.province !== null &&
+      (query.province < 1 || query.province > 16)
+    ) {
+      throw 'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)';
+    }
+
     if (query.locality && !query.province) {
       throw 'query passed to NfzQueuesApiClientService#fetchAll() must specify province when locality is specified.';
     }
