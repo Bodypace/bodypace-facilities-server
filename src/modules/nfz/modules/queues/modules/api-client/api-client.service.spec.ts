@@ -112,29 +112,70 @@ describe('NfzQueuesApiClientService ', () => {
       });
     });
 
-    describe('called with query that is invalid - province code is not in range [1,16]', () => {
+    describe('called with query that is invalid - province code is below range [1,16]', () => {
       beforeEach(() => {
         query = {
           case: 1,
           benefitForChildren: 'false',
           benefit: 'endokrynolog',
           locality: 'KATOWICE',
+          province: 0,
         };
       });
 
-      it('should throw an error which explains that province code cannot be lesser than 1', () => {
-        expect(() =>
-          nfzQueuesApiClientService.fetchAll({ ...query, province: 0 }),
-        ).toThrow(
+      it('should throw an error which explains that province code cannot be greater than 16', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
         );
       });
 
-      it('should throw an error which explains that province code cannot be greater than 16', () => {
-        expect(() =>
-          nfzQueuesApiClientService.fetchAll({ ...query, province: 17 }),
-        ).toThrow(
+      it('should log that it was called and include query argument in log', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow();
+
+        expect(logger.log).toHaveBeenCalledTimes(2);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          `#fetchAll() query = ${JSON.stringify(query)}`,
+          'NfzQueuesApiClientService',
+        );
+      });
+    });
+
+    describe('called with query that is invalid - province code is above range [1,16]', () => {
+      beforeEach(() => {
+        query = {
+          case: 1,
+          benefitForChildren: 'false',
+          benefit: 'endokrynolog',
+          locality: 'KATOWICE',
+          province: 17,
+        };
+      });
+
+      it('should throw an error which explains that province code cannot be lesser than 1', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
+        );
+      });
+
+      it('should log that it was called and include query argument in log', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow();
+
+        expect(logger.log).toHaveBeenCalledTimes(2);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          `#fetchAll() query = ${JSON.stringify(query)}`,
+          'NfzQueuesApiClientService',
         );
       });
     });
