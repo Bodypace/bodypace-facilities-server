@@ -1,5 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { NfzQueuesApiClientService } from './modules/api-client/api-client.service';
+import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interface';
+import { NfzQueuesApiQueue } from './modules/api-client/interfaces/queue.interface';
 
 @Injectable()
 export class NfzQueuesService {
@@ -9,12 +11,8 @@ export class NfzQueuesService {
     private readonly nfzQueuesApiClientService: NfzQueuesApiClientService,
   ) {}
 
-  findAll(): string {
+  async findAll(query: NfzQueuesApiQuery): Promise<NfzQueuesApiQueue[]> {
     this.logger.debug('#findAll()');
-    return this.nfzQueuesApiClientService.fetchAll({
-      case: 1,
-      benefitForChildren: 'false',
-      benefit: 'endokrynolog',
-    });
+    return await this.nfzQueuesApiClientService.fetchAll(query);
   }
 }

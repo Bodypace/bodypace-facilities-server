@@ -1,5 +1,6 @@
-import { Controller, Get, Logger } from '@nestjs/common';
+import { Controller, Get, Logger, Query } from '@nestjs/common';
 import { NfzQueuesService } from './queues.service';
+import { NfzQueuesQuery } from './dto/query.dto';
 
 @Controller('nfz')
 export class NfzQueuesController {
@@ -8,8 +9,8 @@ export class NfzQueuesController {
   constructor(private readonly nfzQueuesService: NfzQueuesService) {}
 
   @Get('queues')
-  findAll() {
+  findAll(@Query() query: NfzQueuesQuery) {
     this.logger.log('#findAll()');
-    return this.nfzQueuesService.findAll();
+    return this.nfzQueuesService.findAll(query);
   }
 }

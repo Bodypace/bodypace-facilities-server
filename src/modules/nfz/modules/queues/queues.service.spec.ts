@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NfzQueuesService } from './queues.service';
 import { NfzQueuesApiClientModule } from './modules/api-client/api-client.module';
 import { NfzQueuesApiClientService } from './modules/api-client/api-client.service';
+import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interface';
 
 const mockedValues = {
   api: {
@@ -11,13 +12,14 @@ const mockedValues = {
 
 function MockedNfzQueuesApiClientService() {
   return {
-    fetchAll: jest.fn().mockReturnValue(mockedValues.api.fetchAll),
+    fetchAll: jest.fn().mockResolvedValue(mockedValues.api.fetchAll),
   };
 }
 
 describe('NfzQueuesService', () => {
   let nfzQueuesService: NfzQueuesService;
   let nfzQueuesApiClientService: NfzQueuesApiClientService;
+  let query: NfzQueuesApiQuery;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -43,13 +45,26 @@ describe('NfzQueuesService', () => {
   });
 
   describe('findAll()', () => {
-    it('should call NfzQueuesApiClientService#fetchAll()', () => {
-      nfzQueuesService.findAll();
+    beforeEach(() => {
+      query = {
+        case: 1,
+        benefitForChildren: 'false',
+        benefit: 'endokrynolog',
+        province: 12,
+        locality: 'gliwice',
+      };
+    });
+
+    it('should call NfzQueuesApiClientService#fetchAll() with the same query it got as argument', () => {
+      nfzQueuesService.findAll(query);
       expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledTimes(1);
+      expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledWith(query);
     });
 
     it('should return result of NfzQueuesApiClientService#fetchAll()', () => {
-      expect(nfzQueuesService.findAll()).toBe(mockedValues.api.fetchAll);
+      expect(nfzQueuesService.findAll(query)).resolves.toBe(
+        mockedValues.api.fetchAll,
+      );
     });
   });
 });

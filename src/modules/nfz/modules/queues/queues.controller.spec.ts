@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerService } from '@nestjs/common';
 import { NfzQueuesController } from './queues.controller';
 import { NfzQueuesService } from './queues.service';
+import { NfzQueuesQuery } from './dto/query.dto';
 
 function MockedLogger() {
   return {
@@ -19,7 +20,7 @@ const mockedValues = {
 
 function MockedNfzQueuesService() {
   return {
-    findAll: jest.fn().mockReturnValue(mockedValues.service.findAll),
+    findAll: jest.fn().mockResolvedValue(mockedValues.service.findAll),
   };
 }
 
@@ -27,6 +28,7 @@ describe('NfzQueuesController', () => {
   let nfzQueuesController: NfzQueuesController;
   let nfzQueuesService: NfzQueuesService;
   let logger: LoggerService;
+  let query: NfzQueuesQuery;
 
   beforeEach(async () => {
     logger = MockedLogger();
@@ -65,17 +67,30 @@ describe('NfzQueuesController', () => {
   });
 
   describe('findAll()', () => {
-    it('should call nfzQueuesService#findAll()', () => {
-      nfzQueuesController.findAll();
+    beforeEach(() => {
+      query = {
+        case: 1,
+        benefitForChildren: 'false',
+        benefit: 'endokrynolog',
+        province: 12,
+        locality: 'gliwice',
+      };
+    });
+
+    it('should call nfzQueuesService#findAll() with the query it got as argument', async () => {
+      await nfzQueuesController.findAll(query);
       expect(nfzQueuesService.findAll).toHaveBeenCalledTimes(1);
+      expect(nfzQueuesService.findAll).toHaveBeenCalledWith(query);
     });
 
     it('should return result of nfzQueuesService#findAll()', () => {
-      expect(nfzQueuesController.findAll()).toBe(mockedValues.service.findAll);
+      expect(nfzQueuesController.findAll(query)).resolves.toBe(
+        mockedValues.service.findAll,
+      );
     });
 
-    it('should log that it was called', () => {
-      nfzQueuesController.findAll();
+    it('should log that it was called', async () => {
+      await nfzQueuesController.findAll(query);
 
       expect(logger.log).toHaveBeenCalledTimes(2);
       expect(logger.log).toHaveBeenNthCalledWith(
