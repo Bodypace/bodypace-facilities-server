@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { LoggerService } from '@nestjs/common';
 import { NfzQueuesApiClientService } from './api-client.service';
+import { NfzQueuesApiQuery } from './interfaces/query.interface';
 
 function MockedLogger() {
   return {
@@ -13,6 +14,7 @@ function MockedLogger() {
 describe('NfzQueuesApiClientService ', () => {
   let nfzQueuesApiClientService: NfzQueuesApiClientService;
   let logger: LoggerService;
+  let query: NfzQueuesApiQuery;
 
   beforeEach(async () => {
     logger = MockedLogger();
@@ -45,26 +47,69 @@ describe('NfzQueuesApiClientService ', () => {
   });
 
   describe('fetchAll()', () => {
-    it('should return placeholder text', () => {
-      expect(nfzQueuesApiClientService.fetchAll()).toBe(
-        'fetch all queues to a given benefit provided by NFZ in Poland',
-      );
+    describe('called with query that is valid', () => {
+      beforeEach(() => {
+        query = {
+          case: 1,
+          benefitForChildren: 'false',
+          benefit: 'endokrynolog',
+        };
+      });
+
+      it('should return placeholder text', () => {
+        expect(nfzQueuesApiClientService.fetchAll(query)).toBe(
+          'fetch all queues to a given benefit provided by NFZ in Poland',
+        );
+      });
+
+      it('should log that it was called and include query argument in log', () => {
+        nfzQueuesApiClientService.fetchAll(query);
+
+        expect(logger.log).toHaveBeenCalledTimes(2);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          `#fetchAll() query = ${JSON.stringify(query)}`,
+          'NfzQueuesApiClientService',
+        );
+      });
     });
 
-    it('should log that it was called', () => {
-      nfzQueuesApiClientService.fetchAll();
+    describe('called with query that is invald - specifying locality but not province', () => {
+      beforeEach(() => {
+        query = {
+          case: 1,
+          benefitForChildren: 'false',
+          benefit: 'endokrynolog',
+          locality: 'KATOWICE',
+        };
+      });
 
-      expect(logger.log).toHaveBeenCalledTimes(2);
-      expect(logger.log).toHaveBeenNthCalledWith(
-        1,
-        'RootTestModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        2,
-        '#fetchAll()',
-        'NfzQueuesApiClientService',
-      );
+      it('should throw an error which explains that province has to be specified when locality is specified', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow(
+          'query passed to NfzQueuesApiClientService#fetchAll() must specify province when locality is specified.',
+        );
+      });
+
+      it('should log that it was called and include query argument in log', () => {
+        expect(() => nfzQueuesApiClientService.fetchAll(query)).toThrow();
+
+        expect(logger.log).toHaveBeenCalledTimes(2);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          `#fetchAll() query = ${JSON.stringify(query)}`,
+          'NfzQueuesApiClientService',
+        );
+      });
     });
   });
 });

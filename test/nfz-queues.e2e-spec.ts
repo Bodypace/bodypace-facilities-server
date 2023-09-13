@@ -140,7 +140,7 @@ describe('NfzQueuesController (e2e)', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         10,
-        '#fetchAll()',
+        '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokrynolog"}',
         'NfzQueuesApiClientService',
       );
     });

@@ -11,6 +11,10 @@ export class NfzQueuesService {
 
   findAll(): string {
     this.logger.debug('#findAll()');
-    return this.nfzQueuesApiClientService.fetchAll();
+    return this.nfzQueuesApiClientService.fetchAll({
+      case: 1,
+      benefitForChildren: 'false',
+      benefit: 'endokrynolog',
+    });
   }
 }
