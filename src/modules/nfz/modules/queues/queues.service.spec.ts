@@ -2,11 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NfzQueuesService } from './queues.service';
 import { NfzQueuesApiClientModule } from './modules/api-client/api-client.module';
 import { NfzQueuesApiClientService } from './modules/api-client/api-client.service';
+import { NfzQueuesCacheModule } from './modules/cache/cache.module';
 import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interface';
+import { mockedResponse } from '../../../../../test/mocks/httpService/mocked-response-1-false-endo-06-page-2';
 
 const mockedValues = {
   api: {
-    fetchAll: 'mocked fetchAll() value',
+    fetchAll: mockedResponse.response.data[4],
   },
 };
 
@@ -23,7 +25,7 @@ describe('NfzQueuesService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [NfzQueuesApiClientModule],
+      imports: [NfzQueuesApiClientModule, NfzQueuesCacheModule],
       providers: [NfzQueuesService],
     })
       .overrideProvider(NfzQueuesApiClientService)
@@ -65,6 +67,17 @@ describe('NfzQueuesService', () => {
       expect(nfzQueuesService.findAll(query)).resolves.toBe(
         mockedValues.api.fetchAll,
       );
+    });
+
+    it('should cache value to avoid calling NfzQueuesApiClientService#fetchAll() twice with same query', async () => {
+      await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
+        mockedValues.api.fetchAll,
+      );
+      await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
+        mockedValues.api.fetchAll,
+      );
+      expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledTimes(1);
+      expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledWith(query);
     });
   });
 });
