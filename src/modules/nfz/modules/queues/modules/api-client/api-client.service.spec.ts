@@ -57,6 +57,20 @@ describe('NfzQueuesApiClientService ', () => {
   });
 
   describe('fetchAll()', () => {
+    // describe('called with query that is valid but network request failed', () => {
+    //   beforeEach(() => {
+    //     query = {
+    //       case: 1,
+    //       benefitForChildren: 'false',
+    //       benefit: 'endokryno',
+    //       province: 12,
+    //       locality: 'KATOWICE',
+    //     };
+    //   });
+
+    //   it('should return log that ')
+    // })
+
     describe('called with query that is valid - no. 1', () => {
       beforeEach(() => {
         query = {
