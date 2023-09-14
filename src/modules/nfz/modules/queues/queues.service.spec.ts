@@ -55,8 +55,8 @@ describe('NfzQueuesService', () => {
       };
     });
 
-    it('should call NfzQueuesApiClientService#fetchAll() with the same query it got as argument', () => {
-      nfzQueuesService.findAll(query);
+    it('should call NfzQueuesApiClientService#fetchAll() with the same query it got as argument', async () => {
+      await nfzQueuesService.findAll(query);
       expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledTimes(1);
       expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledWith(query);
     });
