@@ -14,6 +14,10 @@ export class NfzQueuesApiClientService {
   private validateQuery(query: NfzQueuesApiQuery): void {
     this.logger.debug(`#validateQuery() query = ${JSON.stringify(query)}`);
 
+    if (query.case !== 1 && query.case !== 2) {
+      throw 'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2';
+    }
+
     if (
       query.province !== undefined &&
       query.province !== null &&

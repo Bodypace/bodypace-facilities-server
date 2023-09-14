@@ -316,5 +316,51 @@ describe('NfzQueuesApiClientService ', () => {
         );
       });
     });
+
+    describe('called with query that is invalid - case that is neither 1 nor 2', () => {
+      beforeEach(() => {
+        query = {
+          case: 3,
+          benefitForChildren: 'false',
+          benefit: 'endokrynolog',
+          locality: 'KATOWICE',
+          province: 6,
+        };
+      });
+
+      it('should throw an error which explains that case has to be either 1 or 2', () => {
+        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+          'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
+        );
+        expect(
+          nfzQueuesApiClientService.fetchAll({ ...query, case: 0 }),
+        ).rejects.toBe(
+          'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
+        );
+        expect(
+          nfzQueuesApiClientService.fetchAll({ ...query, case: -1 }),
+        ).rejects.toBe(
+          'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
+        );
+      });
+
+      it('should log that it was called and include query argument in log', () => {
+        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+          'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
+        );
+
+        expect(logger.log).toHaveBeenCalledTimes(2);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          `#fetchAll() query = ${JSON.stringify(query)}`,
+          'NfzQueuesApiClientService',
+        );
+      });
+    });
   });
 });

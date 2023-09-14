@@ -103,7 +103,7 @@ describe('NfzQueuesController (e2e)', () => {
   });
 
   describe('/nfz/queues (GET)', () => {
-    describe('case no. 1 (benefit = endokryno, province = 12, locality = KATOWICE)', () => {
+    describe('with query that is valid - case no. 1 (benefit = endokryno, province = 12, locality = KATOWICE)', () => {
       beforeEach(() => {
         url =
           '/nfz/queues?case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE';
@@ -175,7 +175,7 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
-          '#fetchAll() query = {"case":"1","benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
+          '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
@@ -191,7 +191,7 @@ describe('NfzQueuesController (e2e)', () => {
       });
     });
 
-    describe('case no. 2 (benefit = endo, province = 6)', () => {
+    describe('with query that is valid - case no. 2 (benefit = endo, province = 6)', () => {
       beforeEach(() => {
         url =
           '/nfz/queues?case=1&benefitForChildren=false&benefit=endo&province=6';
@@ -277,7 +277,7 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
-          '#fetchAll() query = {"case":"1","benefitForChildren":"false","benefit":"endo","province":"6"}',
+          '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endo","province":"6"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
@@ -314,6 +314,85 @@ describe('NfzQueuesController (e2e)', () => {
           18,
           '#fetchAll() network request no. 6, url = https://api.nfz.gov.pl/app-itl-api/queues?page=6&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
+        );
+      });
+    });
+
+    describe('with query that is invalid - case is neither 1 nor 2', () => {
+      beforeEach(() => {
+        url =
+          '/nfz/queues?case=3&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE';
+      });
+
+      it('should return statusCode 400 and response which explains that case is invalid', () => {
+        return request(app.getHttpServer())
+          .get(url)
+          .expect(400)
+          .expect({
+            message: ['case must be one of the following values: 1, 2'],
+            error: 'Bad Request',
+            statusCode: 400,
+          });
+      });
+
+      it('should not log that request handler was called', async () => {
+        // NOTE: this behaviour is probably not correct, as it could be useful to log
+        // that request was received with incorrect query. Maybe add it in the future.
+
+        await request(app.getHttpServer())
+          .get(url)
+          .expect(400)
+          .expect({
+            message: ['case must be one of the following values: 1, 2'],
+            error: 'Bad Request',
+            statusCode: 400,
+          });
+
+        expect(logger.log).toHaveBeenCalledTimes(9);
+        expect(logger.log).toHaveBeenNthCalledWith(
+          1,
+          'RootTestModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          2,
+          'AppModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          3,
+          'NfzModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          4,
+          'HttpModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          5,
+          'NfzQueuesApiClientModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          6,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          7,
+          'NfzQueuesController {/nfz}:',
+          'RoutesResolver',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          8,
+          'Mapped {/nfz/queues, GET} route',
+          'RouterExplorer',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          9,
+          'Nest application successfully started',
+          'NestApplication',
         );
       });
     });
