@@ -14,6 +14,7 @@ import {
 import { CachedNfzQueuesQuery } from './entities/cached-queues-query.entity';
 import { mockedResponse } from '../../../../../../../test/mocks/httpService/mocked-response-1-false-endo-06-page-4';
 import { unlink } from 'node:fs/promises';
+import { fromCachedNfzQueue } from './utils/from-cached-nfz-queue.util';
 
 describe('NfzQueuesCacheService', () => {
   const databaseName = 'test-nfz-queues-cache-service-database.sqlite';
@@ -226,6 +227,171 @@ describe('NfzQueuesCacheService', () => {
             ).resolves.toBeNull();
           });
         }
+      });
+    });
+
+    describe('store()', () => {
+      describe('storage usage', () => {
+        beforeEach(() => {
+          query = structuredClone(sourceQuery);
+          queues = structuredClone(mockedResponse.response.data);
+        });
+
+        it('query should be defined and valid', () => {
+          expect(query).toEqual(sourceQuery);
+          expect(query).not.toBe(sourceQuery);
+        });
+
+        it('queues should be defined and valid', () => {
+          expect(queues).toEqual(mockedResponse.response.data);
+          expect(queues).not.toBe(mockedResponse.response.data);
+        });
+
+        it('should write query and all queues to database', async () => {
+          await expect(
+            nfzQueuesCacheService.store(query, queues),
+          ).resolves.toBeUndefined();
+
+          const queriesRepository =
+            dataSource.getRepository(CachedNfzQueuesQuery);
+          const cachedQueries = await queriesRepository.find();
+          expect(cachedQueries.length).toBe(1);
+          expect({
+            case: cachedQueries[0].case,
+            benefitForChildren: cachedQueries[0].benefitForChildren,
+            benefit: cachedQueries[0].benefit,
+            province: cachedQueries[0].province,
+            locality: cachedQueries[0].locality,
+          }).toStrictEqual(sourceQuery);
+
+          const queuesRepository = dataSource.getRepository(CachedNfzQueue);
+          const cachedQueues = await queuesRepository.find({
+            relations: {
+              statistics: {
+                providerData: true,
+              },
+              dates: true,
+              benefitsProvided: true,
+            },
+          });
+          expect(cachedQueues.length).toBe(mockedResponse.response.data.length);
+
+          const cachedQueuesParsed = cachedQueues.map((cachedQueue) =>
+            fromCachedNfzQueue(cachedQueue),
+          );
+          expect(cachedQueuesParsed).toStrictEqual(
+            mockedResponse.response.data,
+          );
+          expect(cachedQueuesParsed).not.toBe(mockedResponse.response.data);
+        });
+      });
+
+      describe('transactional behavior', () => {
+        describe.each([
+          ['missing case', 'case'],
+          ['missing benefitForChildren', 'benefitForChildren'],
+        ])(
+          'with incorrect query - %s',
+          (_, queryFieldToRemove: 'case' | 'benefitForChildren') => {
+            beforeEach(() => {
+              query = Object.assign({}, sourceQuery);
+              queues = mockedResponse.response.data;
+              Reflect.deleteProperty(query, queryFieldToRemove);
+            });
+
+            it(`query should be missing a field`, () => {
+              expect({
+                ...query,
+                [queryFieldToRemove]: sourceQuery[queryFieldToRemove],
+              }).toEqual(sourceQuery);
+              expect(query).not.toEqual(sourceQuery);
+            });
+
+            it('queues should be defined and correct', () => {
+              expect(queues).toStrictEqual(mockedResponse.response.data);
+            });
+
+            it('should resolve to undefined', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+            });
+
+            it('should leave database empty', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+
+              const entities = dataSource.entityMetadatas.map(
+                (entityMetadata) => entityMetadata.target,
+              );
+              for (const entity of entities) {
+                const repository = dataSource.getRepository(entity);
+                await expect(repository.find()).resolves.toStrictEqual([]);
+              }
+            });
+
+            it('should not save queues get() should return null for the same query', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+              await expect(
+                nfzQueuesCacheService.get(query),
+              ).resolves.toBeNull();
+            });
+          },
+        );
+
+        describe('with incorrect queue', () => {
+          beforeEach(() => {
+            query = Object.assign({}, sourceQuery);
+            queues = structuredClone(mockedResponse.response.data);
+            Reflect.deleteProperty(queues[4].attributes, 'toilet');
+          });
+
+          it('query should be defined and correct', () => {
+            expect(query).toStrictEqual(sourceQuery);
+            expect(query).not.toBe(sourceQuery);
+          });
+
+          it('queue element should be missing toilet value', () => {
+            expect({
+              ...queues[4],
+              attributes: {
+                ...queues[4].attributes,
+                toilet: 'Y',
+              },
+            }).toEqual(mockedResponse.response.data[4]);
+            expect(queues[4]).not.toEqual(mockedResponse.response.data[4]);
+          });
+
+          it('should resolve to undefined', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+          });
+
+          it('should leave database empty', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+
+            const entities = dataSource.entityMetadatas.map(
+              (entityMetadata) => entityMetadata.target,
+            );
+            for (const entity of entities) {
+              const repository = dataSource.getRepository(entity);
+              await expect(repository.find()).resolves.toStrictEqual([]);
+            }
+          });
+
+          it('should not save queues get() should return null for the same query', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+          });
+        });
       });
     });
   });
