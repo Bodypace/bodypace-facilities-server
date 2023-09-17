@@ -6,7 +6,7 @@ export interface NfzQueuesApiQueueStatisticsProviderData {
 }
 
 export interface NfzQueuesApiQueueStatistics {
-  'provider-data'?: NfzQueuesApiQueueStatisticsProviderData;
+  'provider-data': NfzQueuesApiQueueStatisticsProviderData | null;
   'computed-data': string | null;
 }
 
@@ -14,6 +14,12 @@ export interface NfzQueuesApiQueueDates {
   applicable: boolean;
   date: string;
   'date-situation-as-at': string;
+}
+
+export interface NfzQueuesApiQueueBenefitsProvided {
+  'type-of-benefit': number;
+  year: number;
+  amount: number;
 }
 
 export interface NfzQueuesApiQueue {
@@ -44,8 +50,8 @@ export interface NfzQueuesApiQueue {
     elevator: string;
     latitude: number | null;
     longitude: number | null;
-    statistics?: NfzQueuesApiQueueStatistics;
-    dates?: NfzQueuesApiQueueDates;
-    'benefits-provided'?: any;
+    statistics: NfzQueuesApiQueueStatistics | null;
+    dates: NfzQueuesApiQueueDates | null;
+    'benefits-provided': NfzQueuesApiQueueBenefitsProvided | null;
   };
 }

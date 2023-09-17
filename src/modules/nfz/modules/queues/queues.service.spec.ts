@@ -1,14 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { NfzQueuesService } from './queues.service';
 import { NfzQueuesApiClientModule } from './modules/api-client/api-client.module';
 import { NfzQueuesApiClientService } from './modules/api-client/api-client.service';
 import { NfzQueuesCacheModule } from './modules/cache/cache.module';
 import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interface';
 import { mockedResponse } from '../../../../../test/mocks/httpService/mocked-response-1-false-endo-06-page-2';
+import { DataSource } from 'typeorm';
+import { unlink } from 'node:fs/promises';
 
 const mockedValues = {
   api: {
-    fetchAll: mockedResponse.response.data[4],
+    fetchAll: mockedResponse.response.data,
   },
 };
 
@@ -19,13 +22,25 @@ function MockedNfzQueuesApiClientService() {
 }
 
 describe('NfzQueuesService', () => {
+  const databaseName = 'test-nfz-queues-service-database.sqlite';
   let nfzQueuesService: NfzQueuesService;
   let nfzQueuesApiClientService: NfzQueuesApiClientService;
+  let dataSource: DataSource;
   let query: NfzQueuesApiQuery;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [NfzQueuesApiClientModule, NfzQueuesCacheModule],
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: databaseName,
+          autoLoadEntities: true,
+          synchronize: true,
+          dropSchema: true,
+        }),
+        NfzQueuesApiClientModule,
+        NfzQueuesCacheModule,
+      ],
       providers: [NfzQueuesService],
     })
       .overrideProvider(NfzQueuesApiClientService)
@@ -36,6 +51,12 @@ describe('NfzQueuesService', () => {
     nfzQueuesApiClientService = module.get<NfzQueuesApiClientService>(
       NfzQueuesApiClientService,
     );
+    dataSource = module.get<DataSource>(DataSource);
+  });
+
+  afterEach(async () => {
+    await dataSource.destroy();
+    await unlink(databaseName);
   });
 
   it('service should be defined', () => {
@@ -44,6 +65,10 @@ describe('NfzQueuesService', () => {
 
   it('nfzQueuesApiClientService should be defined', () => {
     expect(nfzQueuesApiClientService).toBeDefined();
+  });
+
+  it('dataSource should be defined', () => {
+    expect(dataSource).toBeDefined();
   });
 
   describe('findAll()', () => {
@@ -63,8 +88,8 @@ describe('NfzQueuesService', () => {
       expect(nfzQueuesApiClientService.fetchAll).toHaveBeenCalledWith(query);
     });
 
-    it('should return result of NfzQueuesApiClientService#fetchAll()', () => {
-      expect(nfzQueuesService.findAll(query)).resolves.toBe(
+    it('should return result of NfzQueuesApiClientService#fetchAll()', async () => {
+      await expect(nfzQueuesService.findAll(query)).resolves.toBe(
         mockedValues.api.fetchAll,
       );
     });

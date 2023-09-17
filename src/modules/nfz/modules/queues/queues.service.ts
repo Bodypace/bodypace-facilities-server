@@ -16,13 +16,13 @@ export class NfzQueuesService {
   async findAll(query: NfzQueuesApiQuery): Promise<NfzQueuesApiQueue[]> {
     this.logger.debug('#findAll()');
 
-    let queues = this.nfzQueuesCacheService.get(query);
+    let queues = await this.nfzQueuesCacheService.get(query);
     if (queues) {
       return queues;
     }
 
     queues = await this.nfzQueuesApiClientService.fetchAll(query);
-    this.nfzQueuesCacheService.store(query, queues);
+    await this.nfzQueuesCacheService.store(query, queues);
     return queues;
   }
 }

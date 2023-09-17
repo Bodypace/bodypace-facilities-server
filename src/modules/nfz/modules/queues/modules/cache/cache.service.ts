@@ -1,76 +1,80 @@
 import { Injectable } from '@nestjs/common';
+import { DataSource, ILike, IsNull } from 'typeorm';
 import { NfzQueuesApiQuery } from '../api-client/interfaces/query.interface';
 import { NfzQueuesApiQueue } from '../api-client/interfaces/queue.interface';
-
-interface CacheRecord {
-  query: NfzQueuesApiQuery;
-  queues: NfzQueuesApiQueue[];
-}
+import { CachedNfzQueue } from './entities/cached-queue.entity';
+import { CachedNfzQueuesQuery } from './entities/cached-queues-query.entity';
+import { asCachedNfzQueue } from './utils/as-cached-nfz-queue.util';
+import { asCachedNfzQueuesQuery } from './utils/as-cached-nfz-queues-query.util';
+import { fromCachedNfzQueue } from './utils/from-cached-nfz-queue.util';
 
 @Injectable()
 export class NfzQueuesCacheService {
-  private records: CacheRecord[] = [];
+  constructor(private dataSource: DataSource) {}
 
-  private queriesMatch(
-    left: NfzQueuesApiQuery,
-    right: NfzQueuesApiQuery,
-  ): boolean {
-    if (left.case !== right.case) {
-      return false;
+  async store(
+    query: NfzQueuesApiQuery,
+    queues: NfzQueuesApiQueue[],
+  ): Promise<void> {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+    try {
+      const cachedQuery = asCachedNfzQueuesQuery(query);
+      await queryRunner.manager.save(cachedQuery);
+
+      if (!cachedQuery.id) {
+        throw 'could not obtain new cached request id';
+      }
+
+      for (const queue of queues) {
+        const cachedQueue = asCachedNfzQueue(queue, cachedQuery);
+        await queryRunner.manager.save(cachedQueue);
+      }
+
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+    } finally {
+      await queryRunner.release();
     }
-
-    if (left.benefitForChildren !== right.benefitForChildren) {
-      if (
-        left.benefitForChildren === undefined ||
-        right.benefitForChildren === undefined
-      ) {
-        return false;
-      }
-      if (
-        left.benefitForChildren.toLowerCase() !==
-        right.benefitForChildren.toLowerCase()
-      ) {
-        return false;
-      }
-    }
-
-    if (left.benefit !== right.benefit) {
-      if (left.benefit === undefined || right.benefit === undefined) {
-        return false;
-      }
-      if (left.benefit.toLowerCase() !== right.benefit.toLowerCase()) {
-        return false;
-      }
-    }
-
-    if (left.province !== right.province) {
-      return false;
-    }
-
-    if (left.locality !== right.locality) {
-      if (left.locality === undefined || right.locality === undefined) {
-        return false;
-      }
-      if (left.locality.toLowerCase() !== right.locality.toLowerCase()) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
-  store(query: NfzQueuesApiQuery, queues: NfzQueuesApiQueue[]): void {
-    this.records.push({
-      query: Object.assign({}, query),
-      queues,
+  async get(query: NfzQueuesApiQuery): Promise<NfzQueuesApiQueue[] | null> {
+    const queriesRepository =
+      this.dataSource.getRepository(CachedNfzQueuesQuery);
+
+    const queries = await queriesRepository.findBy({
+      case: query.case,
+      benefitForChildren: ILike(query.benefitForChildren),
+      benefit: query.benefit ? ILike(query.benefit) : IsNull(),
+      province: query.province ? query.province : IsNull(),
+      locality: query.locality ? ILike(query.locality) : IsNull(),
     });
-  }
 
-  get(query: NfzQueuesApiQuery): NfzQueuesApiQueue[] | null {
-    const matchingRecord = this.records.find((record) =>
-      this.queriesMatch(query, record.query),
-    );
+    if (queries.length === 0) {
+      return null;
+    }
 
-    return matchingRecord ? matchingRecord.queues : null;
+    const queuesRepository = this.dataSource.getRepository(CachedNfzQueue);
+
+    const queues = await queuesRepository.find({
+      relations: {
+        cachedQuery: true,
+        statistics: {
+          providerData: true,
+        },
+        dates: true,
+        benefitsProvided: true,
+      },
+      where: {
+        cachedQuery: {
+          id: queries[queries.length - 1].id,
+        },
+      },
+    });
+
+    return queues.map((queue) => fromCachedNfzQueue(queue));
   }
 }

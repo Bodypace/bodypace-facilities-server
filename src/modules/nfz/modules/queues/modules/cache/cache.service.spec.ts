@@ -1,25 +1,64 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { DataSource } from 'typeorm';
 import { NfzQueuesCacheService } from './cache.service';
 import { NfzQueuesApiQuery } from '../api-client/interfaces/query.interface';
 import { NfzQueuesApiQueue } from '../api-client/interfaces/queue.interface';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  CachedNfzQueueStatisticsProviderData,
+  CachedNfzQueueStatistics,
+  CachedNfzQueueDates,
+  CachedNfzQueueBenefitsProvided,
+  CachedNfzQueue,
+} from './entities/cached-queue.entity';
+import { CachedNfzQueuesQuery } from './entities/cached-queues-query.entity';
+import { unlink } from 'node:fs/promises';
 
 describe('NfzQueuesCacheService', () => {
+  const databaseName = 'test-nfz-queues-cache-service-database.sqlite';
   let nfzQueuesCacheService: NfzQueuesCacheService;
+  let dataSource: DataSource;
   let query: NfzQueuesApiQuery;
   let queues: NfzQueuesApiQueue[];
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: databaseName,
+          synchronize: true,
+          dropSchema: true,
+          entities: [
+            CachedNfzQueueStatisticsProviderData,
+            CachedNfzQueueStatistics,
+            CachedNfzQueueDates,
+            CachedNfzQueueBenefitsProvided,
+            CachedNfzQueue,
+            CachedNfzQueuesQuery,
+          ],
+        }),
+      ],
       providers: [NfzQueuesCacheService],
     }).compile();
 
     nfzQueuesCacheService = module.get<NfzQueuesCacheService>(
       NfzQueuesCacheService,
     );
+    dataSource = module.get<DataSource>(DataSource);
   });
 
-  it('should be defined', () => {
+  afterEach(async () => {
+    await dataSource.destroy();
+    await unlink(databaseName);
+  });
+
+  it('service should be defined', () => {
     expect(nfzQueuesCacheService).toBeDefined();
+  });
+
+  it('dataSource should be defined', () => {
+    expect(dataSource).toBeDefined();
   });
 
   describe('store() and get()', () => {
@@ -34,13 +73,13 @@ describe('NfzQueuesCacheService', () => {
         };
       });
 
-      it('should return null when called random query', () => {
-        expect(nfzQueuesCacheService.get(query)).toBeNull();
+      it('should return null when called random query', async () => {
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
       });
     });
 
     describe('get() - with data stored', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         query = {
           case: 1,
           benefitForChildren: 'false',
@@ -50,70 +89,76 @@ describe('NfzQueuesCacheService', () => {
         };
         queues = [];
 
-        nfzQueuesCacheService.store(query, queues);
+        await nfzQueuesCacheService.store(query, queues);
       });
 
-      it('should return stored queues for correct query', () => {
-        expect(nfzQueuesCacheService.get(query)).toStrictEqual(queues);
+      it('should return stored queues for correct query', async () => {
+        await expect(nfzQueuesCacheService.get(query)).resolves.toStrictEqual(
+          queues,
+        );
       });
 
-      it('should return stored queues for correct query but benefitForChildren is not strict-case equal', () => {
-        expect(
+      it('should return stored queues for correct query but benefitForChildren is not strict-case equal', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, benefitForChildren: 'FalSE' }),
-        ).toStrictEqual(queues);
+        ).resolves.toStrictEqual(queues);
       });
 
-      it('should return stored queues for correct query but benefit is not strict-case equal', () => {
-        expect(
+      it('should return stored queues for correct query but benefit is not strict-case equal', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, benefit: 'laRYNGOloG' }),
-        ).toStrictEqual(queues);
+        ).resolves.toStrictEqual(queues);
       });
 
-      it('should return stored queues for correct query but locality is not strict-case equal', () => {
-        expect(
+      it('should return stored queues for correct query but locality is not strict-case equal', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, locality: 'MARS base NO.3' }),
-        ).toStrictEqual(queues);
+        ).resolves.toStrictEqual(queues);
       });
 
-      it('should return null when called with different case', () => {
-        expect(nfzQueuesCacheService.get({ ...query, case: 2 })).toBeNull();
+      it('should return null when called with different case', async () => {
+        await expect(
+          nfzQueuesCacheService.get({ ...query, case: 2 }),
+        ).resolves.toBeNull();
       });
 
-      it('should return null when called with different benefitForChildren', () => {
-        expect(
+      it('should return null when called with different benefitForChildren', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, benefitForChildren: 'true' }),
-        ).toBeNull();
+        ).resolves.toBeNull();
       });
 
-      it('should return null when called with different benefit', () => {
-        expect(
+      it('should return null when called with different benefit', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, benefit: 'laryngo' }),
-        ).toBeNull();
+        ).resolves.toBeNull();
       });
 
-      it('should return null when called with different province', () => {
-        expect(nfzQueuesCacheService.get({ ...query, province: 5 })).toBeNull();
+      it('should return null when called with different province', async () => {
+        await expect(
+          nfzQueuesCacheService.get({ ...query, province: 5 }),
+        ).resolves.toBeNull();
       });
 
-      it('should return null when called with different locality', () => {
-        expect(
+      it('should return null when called with different locality', async () => {
+        await expect(
           nfzQueuesCacheService.get({ ...query, locality: 'MARS BASE no 3' }),
-        ).toBeNull();
+        ).resolves.toBeNull();
       });
 
-      it('should return null when called with no benefit', () => {
+      it('should return null when called with no benefit', async () => {
         delete query.benefit;
-        expect(nfzQueuesCacheService.get(query)).toBeNull();
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
       });
 
-      it('should return null when called with no province', () => {
+      it('should return null when called with no province', async () => {
         delete query.province;
-        expect(nfzQueuesCacheService.get(query)).toBeNull();
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
       });
 
-      it('should return null when called with no locality', () => {
+      it('should return null when called with no locality', async () => {
         delete query.locality;
-        expect(nfzQueuesCacheService.get(query)).toBeNull();
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
       });
     });
   });
