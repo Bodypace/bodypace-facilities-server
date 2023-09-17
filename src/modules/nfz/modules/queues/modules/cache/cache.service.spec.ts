@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { LoggerService } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { NfzQueuesCacheService } from './cache.service';
 import { NfzQueuesApiQuery } from '../api-client/interfaces/query.interface';
@@ -16,9 +17,18 @@ import { mockedResponse } from '../../../../../../../test/mocks/httpService/mock
 import { unlink } from 'node:fs/promises';
 import { fromCachedNfzQueue } from './utils/from-cached-nfz-queue.util';
 
+function MockedLogger() {
+  return {
+    log: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+  };
+}
+
 describe('NfzQueuesCacheService', () => {
   const databaseName = 'test-nfz-queues-cache-service-database.sqlite';
   let nfzQueuesCacheService: NfzQueuesCacheService;
+  let logger: LoggerService;
   let dataSource: DataSource;
   const sourceQuery: NfzQueuesApiQuery = {
     case: 1,
@@ -31,6 +41,7 @@ describe('NfzQueuesCacheService', () => {
   let queues: NfzQueuesApiQueue[];
 
   beforeEach(async () => {
+    logger = MockedLogger();
     const module: TestingModule = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
@@ -49,7 +60,9 @@ describe('NfzQueuesCacheService', () => {
         }),
       ],
       providers: [NfzQueuesCacheService],
-    }).compile();
+    })
+      .setLogger(logger)
+      .compile();
 
     nfzQueuesCacheService = module.get<NfzQueuesCacheService>(
       NfzQueuesCacheService,
@@ -68,6 +81,10 @@ describe('NfzQueuesCacheService', () => {
 
   it('dataSource should be defined', () => {
     expect(dataSource).toBeDefined();
+  });
+
+  it('logger should be defined', () => {
+    expect(logger).toBeDefined();
   });
 
   describe('store() and get()', () => {
@@ -317,6 +334,19 @@ describe('NfzQueuesCacheService', () => {
               ).resolves.toBeUndefined();
             });
 
+            it('should log warning that query and queues could not be saved due to invalid query', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+
+              expect(logger.warn).toBeCalledTimes(1);
+              expect(logger.warn).toHaveBeenNthCalledWith(
+                1,
+                `could not store data: SQLITE_CONSTRAINT: NOT NULL constraint failed: cached_nfz_queues_query.${queryFieldToRemove}`,
+                'NfzQueuesCacheService',
+              );
+            });
+
             it('should leave database empty', async () => {
               await expect(
                 nfzQueuesCacheService.store(query, queues),
@@ -369,6 +399,19 @@ describe('NfzQueuesCacheService', () => {
             await expect(
               nfzQueuesCacheService.store(query, queues),
             ).resolves.toBeUndefined();
+          });
+
+          it('should log warning that query and queues could not be saved due to invalid queue', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+
+            expect(logger.warn).toBeCalledTimes(1);
+            expect(logger.warn).toHaveBeenNthCalledWith(
+              1,
+              'could not store data: SQLITE_CONSTRAINT: NOT NULL constraint failed: cached_nfz_queue.toilet',
+              'NfzQueuesCacheService',
+            );
           });
 
           it('should leave database empty', async () => {

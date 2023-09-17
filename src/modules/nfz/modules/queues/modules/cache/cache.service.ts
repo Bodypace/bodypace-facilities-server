@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DataSource, ILike, IsNull } from 'typeorm';
 import { NfzQueuesApiQuery } from '../api-client/interfaces/query.interface';
 import { NfzQueuesApiQueue } from '../api-client/interfaces/queue.interface';
@@ -10,6 +10,8 @@ import { fromCachedNfzQueue } from './utils/from-cached-nfz-queue.util';
 
 @Injectable()
 export class NfzQueuesCacheService {
+  private readonly logger = new Logger(NfzQueuesCacheService.name);
+
   constructor(private dataSource: DataSource) {}
 
   async store(
@@ -35,6 +37,7 @@ export class NfzQueuesCacheService {
 
       await queryRunner.commitTransaction();
     } catch (err) {
+      this.logger.warn(`could not store data: ${err.message}`);
       await queryRunner.rollbackTransaction();
     } finally {
       await queryRunner.release();
