@@ -18,9 +18,11 @@ export class NfzQueuesService {
 
     let queues = await this.nfzQueuesCacheService.get(query);
     if (queues) {
+      this.logger.log('#findAll() - cache hit');
       return queues;
     }
 
+    this.logger.log('#findAll() - cache miss');
     queues = await this.nfzQueuesApiClientService.fetchAll(query);
     await this.nfzQueuesCacheService.store(query, queues);
     return queues;

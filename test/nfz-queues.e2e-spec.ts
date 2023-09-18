@@ -150,7 +150,7 @@ describe('NfzQueuesController (e2e)', () => {
           .expect(200)
           .expect(mockedResponseNo1.response.data);
 
-        expect(logger.log).toHaveBeenCalledTimes(17);
+        expect(logger.log).toHaveBeenCalledTimes(18);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -223,16 +223,21 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           15,
+          '#findAll() - cache miss',
+          'NfzQueuesService',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          16,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() all queues = 14, pages = 1',
           'NfzQueuesApiClientService',
         );
@@ -258,7 +263,7 @@ describe('NfzQueuesController (e2e)', () => {
           .expect(200)
           .expect(mockedResponseNo1.response.data);
 
-        expect(logger.log).toHaveBeenCalledTimes(17);
+        expect(logger.log).toHaveBeenCalledTimes(18);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -331,16 +336,21 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           15,
+          '#findAll() - cache miss',
+          'NfzQueuesService',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          16,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() all queues = 14, pages = 1',
           'NfzQueuesApiClientService',
         );
@@ -380,7 +390,7 @@ describe('NfzQueuesController (e2e)', () => {
             ...mockerResponseNo2Page6.response.data,
           ]);
 
-        expect(logger.log).toHaveBeenCalledTimes(22);
+        expect(logger.log).toHaveBeenCalledTimes(23);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -453,41 +463,46 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           15,
+          '#findAll() - cache miss',
+          'NfzQueuesService',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          16,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endo","province":"6"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endo&province=06',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() all queues = 142, pages = 6',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          18,
+          19,
           '#fetchAll() network request no. 2, url = https://api.nfz.gov.pl/app-itl-api/queues?page=2&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          19,
+          20,
           '#fetchAll() network request no. 3, url = https://api.nfz.gov.pl/app-itl-api/queues?page=3&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          20,
+          21,
           '#fetchAll() network request no. 4, url = https://api.nfz.gov.pl/app-itl-api/queues?page=4&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          21,
+          22,
           '#fetchAll() network request no. 5, url = https://api.nfz.gov.pl/app-itl-api/queues?page=5&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          22,
+          23,
           '#fetchAll() network request no. 6, url = https://api.nfz.gov.pl/app-itl-api/queues?page=6&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
