@@ -137,37 +137,49 @@ describe('NfzQueuesService', () => {
       );
     });
 
-    it('should not order cache to write the same query and queues twice - benefit is same but uppercase', async () => {
-      const getMethod = jest.spyOn(nfzQueuesCacheService, 'get');
-      const storeMethod = jest.spyOn(nfzQueuesCacheService, 'store');
+    it.each([
+      ['benefitForChildren is same but uppercase', 'benefitForChildren'],
+      ['benefit is same but uppercase', 'benefit'],
+      ['locality is same but uppercase', 'locality'],
+    ])(
+      'should not order cache to write the same query and queues twice - %s',
+      async (
+        _,
+        fieldToUpperCase: 'benefitForChildren' | 'benefit' | 'locality',
+      ) => {
+        const getMethod = jest.spyOn(nfzQueuesCacheService, 'get');
+        const storeMethod = jest.spyOn(nfzQueuesCacheService, 'store');
 
-      expect(query.benefit).toBeTruthy();
-      expect(query.benefit?.toUpperCase()).not.toEqual(query.benefit);
+        expect(query[fieldToUpperCase]).toBeTruthy();
+        expect(query[fieldToUpperCase]?.toUpperCase()).not.toEqual(
+          query[fieldToUpperCase],
+        );
 
-      await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
-        mockedValues.api.fetchAll,
-      );
-      await expect(
-        nfzQueuesService.findAll({
+        await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
+          mockedValues.api.fetchAll,
+        );
+        await expect(
+          nfzQueuesService.findAll({
+            ...query,
+            [fieldToUpperCase]: query[fieldToUpperCase]?.toUpperCase(),
+          }),
+        ).resolves.toStrictEqual(mockedValues.api.fetchAll);
+
+        expect(getMethod).toHaveBeenCalledTimes(2);
+        expect(getMethod).toHaveBeenNthCalledWith(1, query);
+        expect(getMethod).toHaveBeenNthCalledWith(2, {
           ...query,
-          benefit: query.benefit?.toUpperCase(),
-        }),
-      ).resolves.toStrictEqual(mockedValues.api.fetchAll);
+          [fieldToUpperCase]: query[fieldToUpperCase]?.toUpperCase(),
+        });
 
-      expect(getMethod).toHaveBeenCalledTimes(2);
-      expect(getMethod).toHaveBeenNthCalledWith(1, query);
-      expect(getMethod).toHaveBeenNthCalledWith(2, {
-        ...query,
-        benefit: query.benefit?.toUpperCase(),
-      });
-
-      expect(storeMethod).toHaveBeenCalledTimes(1);
-      expect(storeMethod).toHaveBeenNthCalledWith(
-        1,
-        query,
-        mockedValues.api.fetchAll,
-      );
-    });
+        expect(storeMethod).toHaveBeenCalledTimes(1);
+        expect(storeMethod).toHaveBeenNthCalledWith(
+          1,
+          query,
+          mockedValues.api.fetchAll,
+        );
+      },
+    );
 
     it('should order cache to write same queues second time when query is different - case is different', async () => {
       const getMethod = jest.spyOn(nfzQueuesCacheService, 'get');
