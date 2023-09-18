@@ -89,355 +89,113 @@ describe('NfzQueuesCacheService', () => {
     expect(logger).toBeDefined();
   });
 
-  describe('store() and get()', () => {
-    describe('get() - with no data stored and database not available', () => {
-      beforeEach(() => {
-        query = Object.assign({}, sourceQuery);
-      });
+  describe('with no data stored', () => {
+    it('database should be empty', async () => {});
 
-      it('should return null', async () => {
-        await dataSource.destroy();
-        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
-      });
-
-      it('should log warning that database could not be read', async () => {
-        await dataSource.destroy();
-        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
-
-        expect(logger.warn).toHaveBeenCalledTimes(1);
-        expect(logger.warn).toHaveBeenNthCalledWith(
-          1,
-          'could not read data from database: Connection with sqlite database is not established. Check connection configuration.',
-          'NfzQueuesCacheService',
-        );
-      });
-    });
-
-    describe('get() - with no data stored', () => {
-      beforeEach(() => {
-        query = Object.assign({}, sourceQuery);
-      });
-
-      it('should return null when called random query', async () => {
-        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
-      });
-    });
-
-    // TODO: write all those tests for scenario where data is stored and then database connection lost
-    describe.each([
-      ['with queues - empty array', []],
-      ['with queues - actual data', mockedResponse.response.data],
-    ])('get() - with data stored (%s)', (_, currentQueues) => {
-      describe.each([
-        ['with query full', null],
-        ['with query without benefit', 'benefit'],
-        ['with query without province', 'province'],
-        ['with query without locality', 'locality'],
-      ])('%s', (_, fieldToRemove: 'benefit' | 'province' | 'locality') => {
-        beforeEach(async () => {
-          query = Object.assign({}, sourceQuery);
-
-          if (fieldToRemove) {
-            delete query[fieldToRemove];
-          }
-
-          queues = currentQueues;
-
-          await nfzQueuesCacheService.store(query, queues);
-        });
-
-        it('should return stored queues for correct query', async () => {
-          await expect(nfzQueuesCacheService.get(query)).resolves.toStrictEqual(
-            queues,
-          );
-        });
-
-        it('should return stored queues for correct query but benefitForChildren is not strict-case equal', async () => {
-          await expect(
-            nfzQueuesCacheService.get({
-              ...query,
-              benefitForChildren: 'FalSE',
-            }),
-          ).resolves.toStrictEqual(queues);
-        });
-
-        if (fieldToRemove !== 'benefit') {
-          it('should return stored queues for correct query but benefit is not strict-case equal', async () => {
-            await expect(
-              nfzQueuesCacheService.get({ ...query, benefit: 'laRYNGOloG' }),
-            ).resolves.toStrictEqual(queues);
+    describe('with database available', () => {
+      describe('get()', () => {
+        describe('for not stored query', () => {
+          beforeEach(() => {
+            query = structuredClone(sourceQuery);
           });
-        }
 
-        if (fieldToRemove !== 'locality') {
-          it('should return stored queues for correct query but locality is not strict-case equal', async () => {
-            await expect(
-              nfzQueuesCacheService.get({
-                ...query,
-                locality: 'MARS base NO.3',
-              }),
-            ).resolves.toStrictEqual(queues);
+          it('query should be defined', () => {
+            expect(query).toEqual(sourceQuery);
+            expect(query).not.toBe(sourceQuery);
           });
-        }
 
-        it('should return null when called with different case', async () => {
-          await expect(
-            nfzQueuesCacheService.get({ ...query, case: 2 }),
-          ).resolves.toBeNull();
-        });
-
-        it('should return null when called with different benefitForChildren', async () => {
-          await expect(
-            nfzQueuesCacheService.get({ ...query, benefitForChildren: 'true' }),
-          ).resolves.toBeNull();
-        });
-
-        if (fieldToRemove !== 'benefit') {
-          it('should return null when called with different benefit', async () => {
-            await expect(
-              nfzQueuesCacheService.get({ ...query, benefit: 'laryngo' }),
-            ).resolves.toBeNull();
-          });
-        }
-
-        if (fieldToRemove !== 'province') {
-          it('should return null when called with different province', async () => {
-            await expect(
-              nfzQueuesCacheService.get({ ...query, province: 5 }),
-            ).resolves.toBeNull();
-          });
-        }
-
-        if (fieldToRemove !== 'locality') {
-          it('should return null when called with different locality', async () => {
-            await expect(
-              nfzQueuesCacheService.get({
-                ...query,
-                locality: 'MARS BASE no 3',
-              }),
-            ).resolves.toBeNull();
-          });
-        }
-
-        if (fieldToRemove !== 'benefit') {
-          it('should return null when called with no benefit', async () => {
-            delete query.benefit;
+          it('should return null', async () => {
             await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
           });
-        } else {
-          it('should return null when called with benefit', async () => {
-            expect(sourceQuery.benefit).toBeDefined();
-            await expect(
-              nfzQueuesCacheService.get({
-                ...query,
-                benefit: sourceQuery.benefit,
-              }),
-            ).resolves.toBeNull();
-          });
-        }
-
-        if (fieldToRemove !== 'province') {
-          it('should return null when called with no province', async () => {
-            delete query.province;
-            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
-          });
-        } else {
-          it('should return null when called with province', async () => {
-            expect(sourceQuery.province).toBeDefined();
-            await expect(
-              nfzQueuesCacheService.get({
-                ...query,
-                province: sourceQuery.province,
-              }),
-            ).resolves.toBeNull();
-          });
-        }
-
-        if (fieldToRemove !== 'locality') {
-          it('should return null when called with no locality', async () => {
-            delete query.locality;
-            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
-          });
-        } else {
-          it('should return null when called with locality', async () => {
-            expect(sourceQuery.locality).toBeDefined();
-            await expect(
-              nfzQueuesCacheService.get({
-                ...query,
-                locality: sourceQuery.locality,
-              }),
-            ).resolves.toBeNull();
-          });
-        }
-      });
-    });
-
-    describe('store()', () => {
-      describe('with database not available', () => {
-        beforeEach(() => {
-          query = structuredClone(sourceQuery);
-          queues = structuredClone(mockedResponse.response.data);
-        });
-
-        it('should resolve to undefined', async () => {
-          await dataSource.destroy();
-          await expect(
-            nfzQueuesCacheService.store(query, queues),
-          ).resolves.toBeUndefined();
-        });
-
-        it('should log warning that database could not be accessed', async () => {
-          await dataSource.destroy();
-          await expect(
-            nfzQueuesCacheService.store(query, queues),
-          ).resolves.toBeUndefined();
-
-          expect(logger.warn).toHaveBeenCalledTimes(1);
-          expect(logger.warn).toHaveBeenNthCalledWith(
-            1,
-            'could not create a transaction for database: Connection with sqlite database is not established. Check connection configuration.',
-            'NfzQueuesCacheService',
-          );
         });
       });
 
-      describe('storage usage', () => {
-        beforeEach(() => {
-          query = structuredClone(sourceQuery);
-          queues = structuredClone(mockedResponse.response.data);
-        });
+      describe('store()', () => {
+        describe('for valid query and queues', () => {
+          beforeEach(() => {
+            query = structuredClone(sourceQuery);
+            queues = structuredClone(mockedResponse.response.data);
+          });
 
-        it('query should be defined and valid', () => {
-          expect(query).toEqual(sourceQuery);
-          expect(query).not.toBe(sourceQuery);
-        });
+          it('query should be defined', () => {
+            expect(query).toEqual(sourceQuery);
+            expect(query).not.toBe(sourceQuery);
+          });
 
-        it('queues should be defined and valid', () => {
-          expect(queues).toEqual(mockedResponse.response.data);
-          expect(queues).not.toBe(mockedResponse.response.data);
-        });
+          it('queues should be defined', () => {
+            expect(queues).toEqual(mockedResponse.response.data);
+            expect(queues).not.toBe(mockedResponse.response.data);
+          });
 
-        it('should write query and all queues to database', async () => {
-          await expect(
-            nfzQueuesCacheService.store(query, queues),
-          ).resolves.toBeUndefined();
+          it('should resolve to undefined', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+          });
 
-          const queriesRepository =
-            dataSource.getRepository(CachedNfzQueuesQuery);
-          const cachedQueries = await queriesRepository.find();
-          expect(cachedQueries.length).toBe(1);
-          expect({
-            case: cachedQueries[0].case,
-            benefitForChildren: cachedQueries[0].benefitForChildren,
-            benefit: cachedQueries[0].benefit,
-            province: cachedQueries[0].province,
-            locality: cachedQueries[0].locality,
-          }).toStrictEqual(sourceQuery);
+          it('should save query and all queues to database', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
 
-          const queuesRepository = dataSource.getRepository(CachedNfzQueue);
-          const cachedQueues = await queuesRepository.find({
-            relations: {
-              statistics: {
-                providerData: true,
+            const queriesRepository =
+              dataSource.getRepository(CachedNfzQueuesQuery);
+            const cachedQueries = await queriesRepository.find();
+            expect(cachedQueries.length).toBe(1);
+            expect({
+              case: cachedQueries[0].case,
+              benefitForChildren: cachedQueries[0].benefitForChildren,
+              benefit: cachedQueries[0].benefit,
+              province: cachedQueries[0].province,
+              locality: cachedQueries[0].locality,
+            }).toStrictEqual(sourceQuery);
+
+            const queuesRepository = dataSource.getRepository(CachedNfzQueue);
+            const cachedQueues = await queuesRepository.find({
+              relations: {
+                statistics: {
+                  providerData: true,
+                },
+                dates: true,
+                benefitsProvided: true,
               },
-              dates: true,
-              benefitsProvided: true,
-            },
+            });
+            expect(cachedQueues.length).toBe(
+              mockedResponse.response.data.length,
+            );
+
+            const cachedQueuesParsed = cachedQueues.map((cachedQueue) =>
+              fromCachedNfzQueue(cachedQueue),
+            );
+            expect(cachedQueuesParsed).toStrictEqual(
+              mockedResponse.response.data,
+            );
+            expect(cachedQueuesParsed).not.toBe(mockedResponse.response.data);
           });
-          expect(cachedQueues.length).toBe(mockedResponse.response.data.length);
 
-          const cachedQueuesParsed = cachedQueues.map((cachedQueue) =>
-            fromCachedNfzQueue(cachedQueue),
-          );
-          expect(cachedQueuesParsed).toStrictEqual(
-            mockedResponse.response.data,
-          );
-          expect(cachedQueuesParsed).not.toBe(mockedResponse.response.data);
+          it('should save queues and get() should return those queues for the same query', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+            await expect(nfzQueuesCacheService.get(query)).resolves.toEqual(
+              queues,
+            );
+          });
         });
-      });
 
-      describe('transactional behavior', () => {
-        describe.each([
-          ['missing case', 'case'],
-          ['missing benefitForChildren', 'benefitForChildren'],
-        ])(
-          'with incorrect query - %s',
-          (_, queryFieldToRemove: 'case' | 'benefitForChildren') => {
-            beforeEach(() => {
-              query = Object.assign({}, sourceQuery);
-              queues = mockedResponse.response.data;
-              Reflect.deleteProperty(query, queryFieldToRemove);
-            });
-
-            it(`query should be missing a field`, () => {
-              expect({
-                ...query,
-                [queryFieldToRemove]: sourceQuery[queryFieldToRemove],
-              }).toEqual(sourceQuery);
-              expect(query).not.toEqual(sourceQuery);
-            });
-
-            it('queues should be defined and correct', () => {
-              expect(queues).toStrictEqual(mockedResponse.response.data);
-            });
-
-            it('should resolve to undefined', async () => {
-              await expect(
-                nfzQueuesCacheService.store(query, queues),
-              ).resolves.toBeUndefined();
-            });
-
-            it('should log warning that query and queues could not be saved due to invalid query', async () => {
-              await expect(
-                nfzQueuesCacheService.store(query, queues),
-              ).resolves.toBeUndefined();
-
-              expect(logger.warn).toBeCalledTimes(1);
-              expect(logger.warn).toHaveBeenNthCalledWith(
-                1,
-                `could not store data: SQLITE_CONSTRAINT: NOT NULL constraint failed: cached_nfz_queues_query.${queryFieldToRemove}`,
-                'NfzQueuesCacheService',
-              );
-            });
-
-            it('should leave database empty', async () => {
-              await expect(
-                nfzQueuesCacheService.store(query, queues),
-              ).resolves.toBeUndefined();
-
-              const entities = dataSource.entityMetadatas.map(
-                (entityMetadata) => entityMetadata.target,
-              );
-              for (const entity of entities) {
-                const repository = dataSource.getRepository(entity);
-                await expect(repository.find()).resolves.toStrictEqual([]);
-              }
-            });
-
-            it('should not save queues get() should return null for the same query', async () => {
-              await expect(
-                nfzQueuesCacheService.store(query, queues),
-              ).resolves.toBeUndefined();
-              await expect(
-                nfzQueuesCacheService.get(query),
-              ).resolves.toBeNull();
-            });
-          },
-        );
-
-        describe('with incorrect queue', () => {
+        describe('for valid query and invalid queues', () => {
           beforeEach(() => {
             query = Object.assign({}, sourceQuery);
             queues = structuredClone(mockedResponse.response.data);
             Reflect.deleteProperty(queues[4].attributes, 'toilet');
           });
 
-          it('query should be defined and correct', () => {
+          it('query should be defined', () => {
             expect(query).toStrictEqual(sourceQuery);
             expect(query).not.toBe(sourceQuery);
           });
 
-          it('queue element should be missing toilet value', () => {
+          it('queues should be defined with one queue invalid (missing NOT NULL toilet value)', () => {
             expect({
               ...queues[4],
               attributes: {
@@ -481,7 +239,158 @@ describe('NfzQueuesCacheService', () => {
             }
           });
 
-          it('should not save queues get() should return null for the same query', async () => {
+          it('should not save queues and get() should return null for the same query', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+          });
+        });
+
+        describe.each([
+          ['missing case', 'case'],
+          ['missing benefitForChildren', 'benefitForChildren'],
+        ])(
+          'for invalid query (%s) and valid queues',
+          (_, missingFieldInQuery: 'case' | 'benefitForChildren') => {
+            beforeEach(() => {
+              query = Object.assign({}, sourceQuery);
+              queues = mockedResponse.response.data;
+              Reflect.deleteProperty(query, missingFieldInQuery);
+            });
+
+            it(`query should be defined and missing a field`, () => {
+              expect({
+                ...query,
+                [missingFieldInQuery]: sourceQuery[missingFieldInQuery],
+              }).toEqual(sourceQuery);
+              expect(query).not.toEqual(sourceQuery);
+            });
+
+            it('queues should be defined', () => {
+              expect(queues).toStrictEqual(mockedResponse.response.data);
+            });
+
+            it('should resolve to undefined', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+            });
+
+            it('should log warning that query and queues could not be saved due to invalid query', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+
+              expect(logger.warn).toBeCalledTimes(1);
+              expect(logger.warn).toHaveBeenNthCalledWith(
+                1,
+                `could not store data: SQLITE_CONSTRAINT: NOT NULL constraint failed: cached_nfz_queues_query.${missingFieldInQuery}`,
+                'NfzQueuesCacheService',
+              );
+            });
+
+            it('should leave database empty', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+
+              const entities = dataSource.entityMetadatas.map(
+                (entityMetadata) => entityMetadata.target,
+              );
+              for (const entity of entities) {
+                const repository = dataSource.getRepository(entity);
+                await expect(repository.find()).resolves.toStrictEqual([]);
+              }
+            });
+
+            it('should not save queues and get() should return null for the same query', async () => {
+              await expect(
+                nfzQueuesCacheService.store(query, queues),
+              ).resolves.toBeUndefined();
+              await expect(
+                nfzQueuesCacheService.get(query),
+              ).resolves.toBeNull();
+            });
+          },
+        );
+      });
+    });
+
+    describe('with database not available', () => {
+      beforeEach(async () => {
+        await dataSource.destroy();
+      });
+
+      it('dataSource should not be initialized', () => {
+        expect(dataSource.isInitialized).toBeFalsy();
+      });
+
+      describe('get()', () => {
+        describe('for not stored query', () => {
+          beforeEach(() => {
+            query = structuredClone(sourceQuery);
+          });
+
+          it('query should be defined', () => {
+            expect(query).toEqual(sourceQuery);
+            expect(query).not.toBe(sourceQuery);
+          });
+
+          it('should return null', async () => {
+            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+          });
+
+          it('should log warning that database could not be read', async () => {
+            await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+
+            expect(logger.warn).toHaveBeenCalledTimes(1);
+            expect(logger.warn).toHaveBeenNthCalledWith(
+              1,
+              'could not read data from database: Connection with sqlite database is not established. Check connection configuration.',
+              'NfzQueuesCacheService',
+            );
+          });
+        });
+      });
+
+      describe('store()', () => {
+        describe('for valid query and queues', () => {
+          beforeEach(() => {
+            query = structuredClone(sourceQuery);
+            queues = structuredClone(mockedResponse.response.data);
+          });
+
+          it('query should be defined', () => {
+            expect(query).toEqual(sourceQuery);
+            expect(query).not.toBe(sourceQuery);
+          });
+
+          it('queues should be defined', () => {
+            expect(queues).toEqual(mockedResponse.response.data);
+            expect(queues).not.toBe(mockedResponse.response.data);
+          });
+
+          it('should resolve to undefined', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+          });
+
+          it('should log warning that database could not be accessed', async () => {
+            await expect(
+              nfzQueuesCacheService.store(query, queues),
+            ).resolves.toBeUndefined();
+
+            expect(logger.warn).toHaveBeenCalledTimes(1);
+            expect(logger.warn).toHaveBeenNthCalledWith(
+              1,
+              'could not create a transaction for database: Connection with sqlite database is not established. Check connection configuration.',
+              'NfzQueuesCacheService',
+            );
+          });
+
+          it('should not save queues and get() should return null for the same query', async () => {
             await expect(
               nfzQueuesCacheService.store(query, queues),
             ).resolves.toBeUndefined();
@@ -489,6 +398,183 @@ describe('NfzQueuesCacheService', () => {
           });
         });
       });
+    });
+  });
+
+  describe('with already data stored', () => {
+    describe.each([
+      ['queues being empty array', []],
+      ['queues being actual data', mockedResponse.response.data],
+    ])('stored %s', (_, storedQueues) => {
+      describe.each([
+        ['query with all fields', null],
+        ['query without benefit', 'benefit'],
+        ['query without province', 'province'],
+        ['query without locality', 'locality'],
+      ])(
+        'stored %s',
+        (_, missingFieldInStoredQuery: 'benefit' | 'province' | 'locality') => {
+          beforeEach(async () => {
+            query = Object.assign({}, sourceQuery);
+            if (missingFieldInStoredQuery) {
+              delete query[missingFieldInStoredQuery];
+            }
+            queues = storedQueues;
+            await nfzQueuesCacheService.store(query, queues);
+          });
+
+          describe('with database available', () => {
+            describe('get()', () => {
+              describe('for correct query', () => {
+                it('should return stored queues', async () => {
+                  await expect(
+                    nfzQueuesCacheService.get(query),
+                  ).resolves.toStrictEqual(queues);
+                });
+
+                it('should return stored queues for benefitForChildren which is not strict-case equal', async () => {
+                  await expect(
+                    nfzQueuesCacheService.get({
+                      ...query,
+                      benefitForChildren: 'FalSE',
+                    }),
+                  ).resolves.toStrictEqual(queues);
+                });
+
+                if (missingFieldInStoredQuery !== 'benefit') {
+                  it('should return stored queues for benefit which is not strict-case equal', async () => {
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        benefit: 'laRYNGOloG',
+                      }),
+                    ).resolves.toStrictEqual(queues);
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'locality') {
+                  it('should return stored queues for locality which is not strict-case equal', async () => {
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        locality: 'MARS base NO.3',
+                      }),
+                    ).resolves.toStrictEqual(queues);
+                  });
+                }
+              });
+
+              describe('for incorrect query', () => {
+                it('should return null when called with different case', async () => {
+                  await expect(
+                    nfzQueuesCacheService.get({ ...query, case: 2 }),
+                  ).resolves.toBeNull();
+                });
+
+                it('should return null when called with different benefitForChildren', async () => {
+                  await expect(
+                    nfzQueuesCacheService.get({
+                      ...query,
+                      benefitForChildren: 'true',
+                    }),
+                  ).resolves.toBeNull();
+                });
+
+                if (missingFieldInStoredQuery !== 'benefit') {
+                  it('should return null when called with different benefit', async () => {
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        benefit: 'laryngo',
+                      }),
+                    ).resolves.toBeNull();
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'province') {
+                  it('should return null when called with different province', async () => {
+                    await expect(
+                      nfzQueuesCacheService.get({ ...query, province: 5 }),
+                    ).resolves.toBeNull();
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'locality') {
+                  it('should return null when called with different locality', async () => {
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        locality: 'MARS BASE no 3',
+                      }),
+                    ).resolves.toBeNull();
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'benefit') {
+                  it('should return null when called with no benefit', async () => {
+                    delete query.benefit;
+                    await expect(
+                      nfzQueuesCacheService.get(query),
+                    ).resolves.toBeNull();
+                  });
+                } else {
+                  it('should return null when called with benefit', async () => {
+                    expect(sourceQuery.benefit).toBeDefined();
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        benefit: sourceQuery.benefit,
+                      }),
+                    ).resolves.toBeNull();
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'province') {
+                  it('should return null when called with no province', async () => {
+                    delete query.province;
+                    await expect(
+                      nfzQueuesCacheService.get(query),
+                    ).resolves.toBeNull();
+                  });
+                } else {
+                  it('should return null when called with province', async () => {
+                    expect(sourceQuery.province).toBeDefined();
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        province: sourceQuery.province,
+                      }),
+                    ).resolves.toBeNull();
+                  });
+                }
+
+                if (missingFieldInStoredQuery !== 'locality') {
+                  it('should return null when called with no locality', async () => {
+                    delete query.locality;
+                    await expect(
+                      nfzQueuesCacheService.get(query),
+                    ).resolves.toBeNull();
+                  });
+                } else {
+                  it('should return null when called with locality', async () => {
+                    expect(sourceQuery.locality).toBeDefined();
+                    await expect(
+                      nfzQueuesCacheService.get({
+                        ...query,
+                        locality: sourceQuery.locality,
+                      }),
+                    ).resolves.toBeNull();
+                  });
+                }
+              });
+            });
+          });
+
+          describe('with database not available', () => {
+            // TODO: implement it if it makes sense (idk)
+          });
+        },
+      );
     });
   });
 });
