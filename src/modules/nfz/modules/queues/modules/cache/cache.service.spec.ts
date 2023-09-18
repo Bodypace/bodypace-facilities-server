@@ -124,7 +124,6 @@ describe('NfzQueuesCacheService', () => {
     });
 
     // TODO: write all those tests for scenario where data is stored and then database connection lost
-    // describe('get() - with data stored', () => {
     describe.each([
       ['with queues - empty array', []],
       ['with queues - actual data', mockedResponse.response.data],
