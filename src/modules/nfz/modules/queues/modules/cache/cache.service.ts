@@ -18,66 +18,78 @@ export class NfzQueuesCacheService {
     query: NfzQueuesApiQuery,
     queues: NfzQueuesApiQueue[],
   ): Promise<void> {
-    const queryRunner = this.dataSource.createQueryRunner();
-
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
     try {
-      const cachedQuery = asCachedNfzQueuesQuery(query);
-      await queryRunner.manager.save(cachedQuery);
+      const queryRunner = this.dataSource.createQueryRunner();
 
-      if (!cachedQuery.id) {
-        throw 'could not obtain new cached request id';
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
+      try {
+        const cachedQuery = asCachedNfzQueuesQuery(query);
+        await queryRunner.manager.save(cachedQuery);
+
+        if (!cachedQuery.id) {
+          throw 'could not obtain new cached request id';
+        }
+
+        for (const queue of queues) {
+          const cachedQueue = asCachedNfzQueue(queue, cachedQuery);
+          await queryRunner.manager.save(cachedQueue);
+        }
+
+        await queryRunner.commitTransaction();
+      } catch (err) {
+        this.logger.warn(`could not store data: ${err.message}`);
+        await queryRunner.rollbackTransaction();
+      } finally {
+        await queryRunner.release();
       }
-
-      for (const queue of queues) {
-        const cachedQueue = asCachedNfzQueue(queue, cachedQuery);
-        await queryRunner.manager.save(cachedQueue);
-      }
-
-      await queryRunner.commitTransaction();
     } catch (err) {
-      this.logger.warn(`could not store data: ${err.message}`);
-      await queryRunner.rollbackTransaction();
-    } finally {
-      await queryRunner.release();
+      this.logger.warn(
+        `could not create a transaction for database: ${err.message}`,
+      );
+      return;
     }
   }
 
   async get(query: NfzQueuesApiQuery): Promise<NfzQueuesApiQueue[] | null> {
-    const queriesRepository =
-      this.dataSource.getRepository(CachedNfzQueuesQuery);
+    try {
+      const queriesRepository =
+        this.dataSource.getRepository(CachedNfzQueuesQuery);
 
-    const queries = await queriesRepository.findBy({
-      case: query.case,
-      benefitForChildren: ILike(query.benefitForChildren),
-      benefit: query.benefit ? ILike(query.benefit) : IsNull(),
-      province: query.province ? query.province : IsNull(),
-      locality: query.locality ? ILike(query.locality) : IsNull(),
-    });
+      const queries = await queriesRepository.findBy({
+        case: query.case,
+        benefitForChildren: ILike(query.benefitForChildren),
+        benefit: query.benefit ? ILike(query.benefit) : IsNull(),
+        province: query.province ? query.province : IsNull(),
+        locality: query.locality ? ILike(query.locality) : IsNull(),
+      });
 
-    if (queries.length === 0) {
+      if (queries.length === 0) {
+        return null;
+      }
+
+      const queuesRepository = this.dataSource.getRepository(CachedNfzQueue);
+
+      const queues = await queuesRepository.find({
+        relations: {
+          cachedQuery: true,
+          statistics: {
+            providerData: true,
+          },
+          dates: true,
+          benefitsProvided: true,
+        },
+        where: {
+          cachedQuery: {
+            id: queries[queries.length - 1].id,
+          },
+        },
+      });
+
+      return queues.map((queue) => fromCachedNfzQueue(queue));
+    } catch (err) {
+      this.logger.warn(`could not read data from database: ${err.message}`);
       return null;
     }
-
-    const queuesRepository = this.dataSource.getRepository(CachedNfzQueue);
-
-    const queues = await queuesRepository.find({
-      relations: {
-        cachedQuery: true,
-        statistics: {
-          providerData: true,
-        },
-        dates: true,
-        benefitsProvided: true,
-      },
-      where: {
-        cachedQuery: {
-          id: queries[queries.length - 1].id,
-        },
-      },
-    });
-
-    return queues.map((queue) => fromCachedNfzQueue(queue));
   }
 }

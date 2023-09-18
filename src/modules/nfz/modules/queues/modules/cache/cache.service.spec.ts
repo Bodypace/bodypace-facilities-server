@@ -71,7 +71,9 @@ describe('NfzQueuesCacheService', () => {
   });
 
   afterEach(async () => {
-    await dataSource.destroy();
+    if (dataSource.isInitialized) {
+      await dataSource.destroy();
+    }
     await unlink(databaseName);
   });
 
@@ -88,6 +90,29 @@ describe('NfzQueuesCacheService', () => {
   });
 
   describe('store() and get()', () => {
+    describe('get() - with no data stored and database not available', () => {
+      beforeEach(() => {
+        query = Object.assign({}, sourceQuery);
+      });
+
+      it('should return null', async () => {
+        await dataSource.destroy();
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+      });
+
+      it('should log warning that database could not be read', async () => {
+        await dataSource.destroy();
+        await expect(nfzQueuesCacheService.get(query)).resolves.toBeNull();
+
+        expect(logger.warn).toHaveBeenCalledTimes(1);
+        expect(logger.warn).toHaveBeenNthCalledWith(
+          1,
+          'could not read data from database: Connection with sqlite database is not established. Check connection configuration.',
+          'NfzQueuesCacheService',
+        );
+      });
+    });
+
     describe('get() - with no data stored', () => {
       beforeEach(() => {
         query = Object.assign({}, sourceQuery);
@@ -98,6 +123,7 @@ describe('NfzQueuesCacheService', () => {
       });
     });
 
+    // TODO: write all those tests for scenario where data is stored and then database connection lost
     // describe('get() - with data stored', () => {
     describe.each([
       ['with queues - empty array', []],
@@ -248,6 +274,34 @@ describe('NfzQueuesCacheService', () => {
     });
 
     describe('store()', () => {
+      describe('with database not available', () => {
+        beforeEach(() => {
+          query = structuredClone(sourceQuery);
+          queues = structuredClone(mockedResponse.response.data);
+        });
+
+        it('should resolve to undefined', async () => {
+          await dataSource.destroy();
+          await expect(
+            nfzQueuesCacheService.store(query, queues),
+          ).resolves.toBeUndefined();
+        });
+
+        it('should log warning that database could not be accessed', async () => {
+          await dataSource.destroy();
+          await expect(
+            nfzQueuesCacheService.store(query, queues),
+          ).resolves.toBeUndefined();
+
+          expect(logger.warn).toHaveBeenCalledTimes(1);
+          expect(logger.warn).toHaveBeenNthCalledWith(
+            1,
+            'could not create a transaction for database: Connection with sqlite database is not established. Check connection configuration.',
+            'NfzQueuesCacheService',
+          );
+        });
+      });
+
       describe('storage usage', () => {
         beforeEach(() => {
           query = structuredClone(sourceQuery);
