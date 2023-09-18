@@ -401,6 +401,8 @@ describe('NfzQueuesService', () => {
       const getMethod = jest.spyOn(nfzQueuesCacheService, 'get');
       const storeMethod = jest.spyOn(nfzQueuesCacheService, 'store');
 
+      expect(query.case).not.toBe(2);
+
       await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
         mockedValues.api.fetchAll,
       );
