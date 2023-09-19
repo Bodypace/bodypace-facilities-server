@@ -4,13 +4,13 @@ import { HttpService } from '@nestjs/axios';
 import { INestApplication, LoggerService } from '@nestjs/common';
 import * as request from 'supertest';
 import { AppModule } from './../src/app.module';
-import { mockedResponse as mockedResponseNo1 } from './mocks/httpService/mocked-response-1-false-endokryno-12-katowice-page-1';
-import { mockedResponse as mockerResponseNo2Page1 } from './mocks/httpService/mocked-response-1-false-endo-06-page-1';
-import { mockedResponse as mockerResponseNo2Page2 } from './mocks/httpService/mocked-response-1-false-endo-06-page-2';
-import { mockedResponse as mockerResponseNo2Page3 } from './mocks/httpService/mocked-response-1-false-endo-06-page-3';
-import { mockedResponse as mockerResponseNo2Page4 } from './mocks/httpService/mocked-response-1-false-endo-06-page-4';
-import { mockedResponse as mockerResponseNo2Page5 } from './mocks/httpService/mocked-response-1-false-endo-06-page-5';
-import { mockedResponse as mockerResponseNo2Page6 } from './mocks/httpService/mocked-response-1-false-endo-06-page-6';
+import { req_1_page_1 } from './mocks/httpService/responses/req_1/response-page-1';
+import { req_2_page_1 } from './mocks/httpService/responses/req_2/response-page-1';
+import { req_2_page_2 } from './mocks/httpService/responses/req_2/response-page-2';
+import { req_2_page_3 } from './mocks/httpService/responses/req_2/response-page-3';
+import { req_2_page_4 } from './mocks/httpService/responses/req_2/response-page-4';
+import { req_2_page_5 } from './mocks/httpService/responses/req_2/response-page-5';
+import { req_2_page_6 } from './mocks/httpService/responses/req_2/response-page-6';
 import { MockedHttpService } from './mocks/httpService/http.service.mock';
 import { unlink, copyFile, constants } from 'node:fs/promises';
 
@@ -160,14 +160,14 @@ describe('NfzQueuesController (e2e)', () => {
         return request(app.getHttpServer())
           .get(url)
           .expect(200)
-          .expect(mockedResponseNo1.response.data);
+          .expect(req_1_page_1.data);
       });
 
       it('should log that request handler and queues fetcher (from NFZ api server) were called', async () => {
         await request(app.getHttpServer())
           .get(url)
           .expect(200)
-          .expect(mockedResponseNo1.response.data);
+          .expect(req_1_page_1.data);
 
         expect(logger.log).toHaveBeenCalledTimes(18);
         expect(logger.log).toHaveBeenNthCalledWith(
@@ -273,14 +273,14 @@ describe('NfzQueuesController (e2e)', () => {
         return request(app.getHttpServer())
           .get(url)
           .expect(200)
-          .expect(mockedResponseNo1.response.data);
+          .expect(req_1_page_1.data);
       });
 
       it('should log that request handler and queues fetcher (from NFZ api server) were called', async () => {
         await request(app.getHttpServer())
           .get(url)
           .expect(200)
-          .expect(mockedResponseNo1.response.data);
+          .expect(req_1_page_1.data);
 
         expect(logger.log).toHaveBeenCalledTimes(18);
         expect(logger.log).toHaveBeenNthCalledWith(
@@ -387,12 +387,12 @@ describe('NfzQueuesController (e2e)', () => {
           .get(url)
           .expect(200)
           .expect([
-            ...mockerResponseNo2Page1.response.data,
-            ...mockerResponseNo2Page2.response.data,
-            ...mockerResponseNo2Page3.response.data,
-            ...mockerResponseNo2Page4.response.data,
-            ...mockerResponseNo2Page5.response.data,
-            ...mockerResponseNo2Page6.response.data,
+            ...req_2_page_1.data,
+            ...req_2_page_2.data,
+            ...req_2_page_3.data,
+            ...req_2_page_4.data,
+            ...req_2_page_5.data,
+            ...req_2_page_6.data,
           ]);
       });
 
@@ -401,12 +401,12 @@ describe('NfzQueuesController (e2e)', () => {
           .get(url)
           .expect(200)
           .expect([
-            ...mockerResponseNo2Page1.response.data,
-            ...mockerResponseNo2Page2.response.data,
-            ...mockerResponseNo2Page3.response.data,
-            ...mockerResponseNo2Page4.response.data,
-            ...mockerResponseNo2Page5.response.data,
-            ...mockerResponseNo2Page6.response.data,
+            ...req_2_page_1.data,
+            ...req_2_page_2.data,
+            ...req_2_page_3.data,
+            ...req_2_page_4.data,
+            ...req_2_page_5.data,
+            ...req_2_page_6.data,
           ]);
 
         expect(logger.log).toHaveBeenCalledTimes(23);
@@ -741,24 +741,24 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
         });
 
         it('should first log one cache miss and data fetchinng, and then one cache hit and no data fetching', async () => {
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           expect(logger.log).toHaveBeenCalledTimes(20);
           expect(logger.log).toHaveBeenNthCalledWith(
@@ -869,28 +869,28 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await dataSource.destroy();
 
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
         });
 
         it('should first log one cache miss and data fetchinng, and then again cache miss with data fetching, and warnings about database read and write failures', async () => {
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await dataSource.destroy();
 
           await request(app.getHttpServer())
             .get(url)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           expect(logger.aggregator).toHaveBeenCalledTimes(25);
           expect(logger.aggregator).toHaveBeenNthCalledWith(
@@ -1060,18 +1060,18 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url_1)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await request(app.getHttpServer())
             .get(url_2)
             .expect(200)
             .expect([
-              ...mockerResponseNo2Page1.response.data,
-              ...mockerResponseNo2Page2.response.data,
-              ...mockerResponseNo2Page3.response.data,
-              ...mockerResponseNo2Page4.response.data,
-              ...mockerResponseNo2Page5.response.data,
-              ...mockerResponseNo2Page6.response.data,
+              ...req_2_page_1.data,
+              ...req_2_page_2.data,
+              ...req_2_page_3.data,
+              ...req_2_page_4.data,
+              ...req_2_page_5.data,
+              ...req_2_page_6.data,
             ]);
         });
 
@@ -1079,18 +1079,18 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url_1)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await request(app.getHttpServer())
             .get(url_2)
             .expect(200)
             .expect([
-              ...mockerResponseNo2Page1.response.data,
-              ...mockerResponseNo2Page2.response.data,
-              ...mockerResponseNo2Page3.response.data,
-              ...mockerResponseNo2Page4.response.data,
-              ...mockerResponseNo2Page5.response.data,
-              ...mockerResponseNo2Page6.response.data,
+              ...req_2_page_1.data,
+              ...req_2_page_2.data,
+              ...req_2_page_3.data,
+              ...req_2_page_4.data,
+              ...req_2_page_5.data,
+              ...req_2_page_6.data,
             ]);
 
           expect(logger.log).toHaveBeenCalledTimes(28);
@@ -1242,7 +1242,7 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url_1)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await dataSource.destroy();
 
@@ -1250,12 +1250,12 @@ describe('NfzQueuesController (e2e)', () => {
             .get(url_2)
             .expect(200)
             .expect([
-              ...mockerResponseNo2Page1.response.data,
-              ...mockerResponseNo2Page2.response.data,
-              ...mockerResponseNo2Page3.response.data,
-              ...mockerResponseNo2Page4.response.data,
-              ...mockerResponseNo2Page5.response.data,
-              ...mockerResponseNo2Page6.response.data,
+              ...req_2_page_1.data,
+              ...req_2_page_2.data,
+              ...req_2_page_3.data,
+              ...req_2_page_4.data,
+              ...req_2_page_5.data,
+              ...req_2_page_6.data,
             ]);
         });
 
@@ -1263,7 +1263,7 @@ describe('NfzQueuesController (e2e)', () => {
           await request(app.getHttpServer())
             .get(url_1)
             .expect(200)
-            .expect(mockedResponseNo1.response.data);
+            .expect(req_1_page_1.data);
 
           await dataSource.destroy();
 
@@ -1271,12 +1271,12 @@ describe('NfzQueuesController (e2e)', () => {
             .get(url_2)
             .expect(200)
             .expect([
-              ...mockerResponseNo2Page1.response.data,
-              ...mockerResponseNo2Page2.response.data,
-              ...mockerResponseNo2Page3.response.data,
-              ...mockerResponseNo2Page4.response.data,
-              ...mockerResponseNo2Page5.response.data,
-              ...mockerResponseNo2Page6.response.data,
+              ...req_2_page_1.data,
+              ...req_2_page_2.data,
+              ...req_2_page_3.data,
+              ...req_2_page_4.data,
+              ...req_2_page_5.data,
+              ...req_2_page_6.data,
             ]);
 
           expect(logger.aggregator).toHaveBeenCalledTimes(30);

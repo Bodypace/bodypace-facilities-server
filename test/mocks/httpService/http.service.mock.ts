@@ -1,4 +1,4 @@
-import { mockedResponses } from './mocked-responses';
+import { mockedResponses } from './responses/responses';
 
 export function MockedHttpService() {
   return {

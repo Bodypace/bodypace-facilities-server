@@ -7,7 +7,7 @@ import { NfzQueuesApiClientService } from './modules/api-client/api-client.servi
 import { NfzQueuesCacheModule } from './modules/cache/cache.module';
 import { NfzQueuesCacheService } from './modules/cache/cache.service';
 import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interface';
-import { mockedResponse } from '../../../../../test/mocks/httpService/mocked-response-1-false-endo-06-page-2';
+import { req_1_page_1 } from '../../../../../test/mocks/httpService/responses/req_1/response-page-1';
 import { DataSource } from 'typeorm';
 import { unlink } from 'node:fs/promises';
 
@@ -21,7 +21,7 @@ function MockedLogger() {
 
 const mockedValues = {
   api: {
-    fetchAll: mockedResponse.response.data,
+    fetchAll: req_1_page_1.data,
   },
 };
 

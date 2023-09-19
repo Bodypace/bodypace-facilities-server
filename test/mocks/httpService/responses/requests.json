@@ -1,0 +1,15 @@
+{
+  "req_1": {
+    "case": 1,
+    "benefitForChildren": false,
+    "benefit": "endokryno",
+    "province": 12,
+    "locality": "KATOWICE"
+  },
+  "req_2": {
+    "case": 1,
+    "benefitForChildren": false,
+    "benefit": "endo",
+    "province": 6
+  }
+}
