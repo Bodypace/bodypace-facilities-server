@@ -565,6 +565,95 @@ describe('NfzQueuesCacheService', () => {
                 }
               });
             });
+
+            describe('write()', () => {
+              // TODO: this could use a third scenario where actual queues are shadowed by another set of actual queues
+              // to check that all of them are in db, now there is always mockedResponse.data + [] (nothing) in db
+              const oppositeQueues =
+                storedQueues.length === 0 ? mockedResponse.data : [];
+              const oppositeQueuesDescription =
+                storedQueues.length === 0
+                  ? 'queues being actual data'
+                  : 'queues being empty array';
+
+              describe(`for the same query but ${oppositeQueuesDescription}`, () => {
+                it('queue should be defined and not the one already stored', () => {
+                  expect(oppositeQueues).toBeDefined();
+                  expect(oppositeQueues).not.toEqual(queues);
+                });
+
+                it('should resolve to undefined', async () => {
+                  await expect(
+                    nfzQueuesCacheService.store(query, oppositeQueues),
+                  ).resolves.toBeUndefined();
+                });
+
+                it('should leave database with query stored two times and both old and new queues', async () => {
+                  await expect(
+                    nfzQueuesCacheService.store(query, oppositeQueues),
+                  ).resolves.toBeUndefined();
+
+                  const queriesRepository =
+                    dataSource.getRepository(CachedNfzQueuesQuery);
+                  const cachedQueries = await queriesRepository.find();
+                  expect(cachedQueries.length).toBe(2);
+                  const createExpectedQuery = (no: number) => {
+                    const expectedQuery = {
+                      case: cachedQueries[no].case,
+                      benefitForChildren: cachedQueries[no].benefitForChildren,
+                      benefit: cachedQueries[no].benefit,
+                      province: cachedQueries[no].province,
+                      locality: cachedQueries[no].locality,
+                    };
+                    if (missingFieldInStoredQuery === 'benefit') {
+                      delete expectedQuery.benefit;
+                    }
+                    if (missingFieldInStoredQuery === 'province') {
+                      delete expectedQuery.province;
+                    }
+                    if (missingFieldInStoredQuery === 'locality') {
+                      delete expectedQuery.locality;
+                    }
+                    return expectedQuery;
+                  };
+                  expect(createExpectedQuery(0)).toStrictEqual(query);
+                  expect(createExpectedQuery(1)).toStrictEqual(query);
+
+                  const queuesRepository =
+                    dataSource.getRepository(CachedNfzQueue);
+                  const cachedQueues = await queuesRepository.find({
+                    relations: {
+                      statistics: {
+                        providerData: true,
+                      },
+                      dates: true,
+                      benefitsProvided: true,
+                    },
+                  });
+                  expect(cachedQueues.length).toBe(
+                    queues.length + oppositeQueues.length,
+                  );
+
+                  const cachedQueuesParsed = cachedQueues.map((cachedQueue) =>
+                    fromCachedNfzQueue(cachedQueue),
+                  );
+                  expect(cachedQueuesParsed).toStrictEqual([
+                    ...queues,
+                    ...oppositeQueues,
+                  ]);
+                });
+
+                it('should save queues and get() should return new queues for the same query', async () => {
+                  await expect(
+                    nfzQueuesCacheService.store(query, oppositeQueues),
+                  ).resolves.toBeUndefined();
+
+                  await expect(
+                    nfzQueuesCacheService.get(query),
+                  ).resolves.toStrictEqual(oppositeQueues);
+                });
+              });
+            });
           });
 
           describe('with database not available', () => {
