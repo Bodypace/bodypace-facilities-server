@@ -27,7 +27,6 @@ function MockedLogger() {
 
 describe('NfzQueuesCacheService', () => {
   const databaseName = 'test-nfz-queues-cache-service-database.sqlite';
-  const mockedResponse = req_2_page_3;
   let nfzQueuesCacheService: NfzQueuesCacheService;
   let logger: LoggerService;
   let dataSource: DataSource;
@@ -115,7 +114,7 @@ describe('NfzQueuesCacheService', () => {
         describe('for valid query and queues', () => {
           beforeEach(() => {
             query = structuredClone(sourceQuery);
-            queues = structuredClone(mockedResponse.data);
+            queues = structuredClone(req_2_page_3.data);
           });
 
           it('query should be defined', () => {
@@ -124,8 +123,8 @@ describe('NfzQueuesCacheService', () => {
           });
 
           it('queues should be defined', () => {
-            expect(queues).toEqual(mockedResponse.data);
-            expect(queues).not.toBe(mockedResponse.data);
+            expect(queues).toEqual(req_2_page_3.data);
+            expect(queues).not.toBe(req_2_page_3.data);
           });
 
           it('should resolve to undefined', async () => {
@@ -161,13 +160,13 @@ describe('NfzQueuesCacheService', () => {
                 benefitsProvided: true,
               },
             });
-            expect(cachedQueues.length).toBe(mockedResponse.data.length);
+            expect(cachedQueues.length).toBe(req_2_page_3.data.length);
 
             const cachedQueuesParsed = cachedQueues.map((cachedQueue) =>
               fromCachedNfzQueue(cachedQueue),
             );
-            expect(cachedQueuesParsed).toStrictEqual(mockedResponse.data);
-            expect(cachedQueuesParsed).not.toBe(mockedResponse.data);
+            expect(cachedQueuesParsed).toStrictEqual(req_2_page_3.data);
+            expect(cachedQueuesParsed).not.toBe(req_2_page_3.data);
           });
 
           it('should save queues and get() should return those queues for the same query', async () => {
@@ -183,7 +182,7 @@ describe('NfzQueuesCacheService', () => {
         describe('for valid query and invalid queues', () => {
           beforeEach(() => {
             query = Object.assign({}, sourceQuery);
-            queues = structuredClone(mockedResponse.data);
+            queues = structuredClone(req_2_page_3.data);
             Reflect.deleteProperty(queues[4].attributes, 'toilet');
           });
 
@@ -199,8 +198,8 @@ describe('NfzQueuesCacheService', () => {
                 ...queues[4].attributes,
                 toilet: 'Y',
               },
-            }).toEqual(mockedResponse.data[4]);
-            expect(queues[4]).not.toEqual(mockedResponse.data[4]);
+            }).toEqual(req_2_page_3.data[4]);
+            expect(queues[4]).not.toEqual(req_2_page_3.data[4]);
           });
 
           it('should resolve to undefined', async () => {
@@ -252,7 +251,7 @@ describe('NfzQueuesCacheService', () => {
           (_, missingFieldInQuery: 'case' | 'benefitForChildren') => {
             beforeEach(() => {
               query = Object.assign({}, sourceQuery);
-              queues = mockedResponse.data;
+              queues = req_2_page_3.data;
               Reflect.deleteProperty(query, missingFieldInQuery);
             });
 
@@ -265,7 +264,7 @@ describe('NfzQueuesCacheService', () => {
             });
 
             it('queues should be defined', () => {
-              expect(queues).toStrictEqual(mockedResponse.data);
+              expect(queues).toStrictEqual(req_2_page_3.data);
             });
 
             it('should resolve to undefined', async () => {
@@ -355,7 +354,7 @@ describe('NfzQueuesCacheService', () => {
         describe('for valid query and queues', () => {
           beforeEach(() => {
             query = structuredClone(sourceQuery);
-            queues = structuredClone(mockedResponse.data);
+            queues = structuredClone(req_2_page_3.data);
           });
 
           it('query should be defined', () => {
@@ -364,8 +363,8 @@ describe('NfzQueuesCacheService', () => {
           });
 
           it('queues should be defined', () => {
-            expect(queues).toEqual(mockedResponse.data);
-            expect(queues).not.toBe(mockedResponse.data);
+            expect(queues).toEqual(req_2_page_3.data);
+            expect(queues).not.toBe(req_2_page_3.data);
           });
 
           it('should resolve to undefined', async () => {
@@ -398,10 +397,10 @@ describe('NfzQueuesCacheService', () => {
     });
   });
 
-  describe('with already data stored', () => {
+  describe('with data stored', () => {
     describe.each([
       ['queues being empty array', []],
-      ['queues being actual data', mockedResponse.data],
+      ['queues being actual data', req_2_page_3.data],
     ])('stored %s', (_, storedQueues) => {
       describe.each([
         ['query with all fields', null],
@@ -568,9 +567,9 @@ describe('NfzQueuesCacheService', () => {
 
             describe('write()', () => {
               // TODO: this could use a third scenario where actual queues are shadowed by another set of actual queues
-              // to check that all of them are in db, now there is always mockedResponse.data + [] (nothing) in db
+              // to check that all of them are in db, now there is always req_2_page_3.data + [] (nothing) in db
               const oppositeQueues =
-                storedQueues.length === 0 ? mockedResponse.data : [];
+                storedQueues.length === 0 ? req_2_page_3.data : [];
               const oppositeQueuesDescription =
                 storedQueues.length === 0
                   ? 'queues being actual data'
