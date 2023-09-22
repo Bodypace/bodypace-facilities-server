@@ -29,6 +29,7 @@ Here is a current list of notes and generally things to do:
   - database config
   - cache config
   - cache db errors handling (permit or not or when or for what queries)
+- purge task (e.g. cron job) for NfzQueuesCacheModule
 - tests
   - there is no check that cache store() and get() do not modify query or queues (that could fuck up tests and in general whole code)
   - cache service get() for stored query that is too specific should hide queues that are broader, incorrectly saved under such too specific query (this test is probably not that important to add, as this logic is already kinda tested)
