@@ -1,4 +1,4 @@
-// this file was auto-generated at 2023-09-19T11:47:20.345Z, do not modify it
+// this file was auto-generated at 2023-09-21T11:06:38.859Z, do not modify it
 import { NfzQueuesApiResponse } from '../../../../../src/modules/nfz/modules/queues/modules/api-client/interfaces/response.interface';
 
 export const req_2_page_6: NfzQueuesApiResponse = {
@@ -11,7 +11,7 @@ export const req_2_page_6: NfzQueuesApiResponse = {
     limit: 25,
     provider: 'Narodowy Fundusz Zdrowia',
     'date-published': '2019-02-26T10:49:23+01:00',
-    'date-modified': '2023-09-19T13:47:24+02:00',
+    'date-modified': '2023-09-21T13:06:44+02:00',
     description:
       'Zasób zwraca pierwszy dostępny termin leczenia dla każdego świadczenia medycznego zgodnie z wybranymi parametrami wyszukiwania. Odpowiedź zawiera szczegółowe informacje  oraz listę świadczeń medycznych we właściwej kolejności wyświetlania (według pierwszej dostępnego terminu leczenia)',
     keywords:
@@ -32,7 +32,7 @@ export const req_2_page_6: NfzQueuesApiResponse = {
   data: [
     {
       type: 'queue',
-      id: '05af67e9-b46b-3029-e063-b4200a0af9d5',
+      id: '05d7a466-1740-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -70,14 +70,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-09-04',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 351 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-e2bd-3029-e063-b4200a0af9d5',
+      id: '05d7a465-3efe-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -115,14 +115,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-09-10',
-          'date-situation-as-at': '2023-09-15',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67ea-85b7-3029-e063-b4200a0af9d5',
+      id: '05d7a467-0a3a-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -161,14 +161,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-10-27',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b97d-3029-e063-b4200a0af9d5',
+      id: '05d7a465-1430-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -207,14 +207,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-11-05',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67ea-a141-3029-e063-b4200a0af9d5',
+      id: '05d7a466-fe22-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -253,14 +253,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-11-25',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67ea-8c83-3029-e063-b4200a0af9d5',
+      id: '05d7a467-01a6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -299,14 +299,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-11-25',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-de93-3029-e063-b4200a0af9d5',
+      id: '05d7a465-2d3c-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -344,14 +344,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-11-26',
-          'date-situation-as-at': '2023-09-17',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-aff1-3029-e063-b4200a0af9d5',
+      id: '05d7a465-0aa2-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -390,60 +390,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2026-02-02',
-          'date-situation-as-at': '2023-09-15',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 218 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-aff5-3029-e063-b4200a0af9d5',
-      attributes: {
-        case: 1,
-        benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
-        'many-places': 'N',
-        provider:
-          'PODHALAŃSKI SZPITAL SPECJALISTYCZNY IM. JANA PAWŁA II W NOWYM TARGU',
-        'provider-code': '064/100005',
-        'regon-provider': '000308324',
-        'nip-provider': '7352178657',
-        'teryt-provider': '1211011',
-        place: 'ODDZIAŁ CHIRURGII URAZOWO-ORTOPEDYCZNEJ',
-        address: 'UL. SZPITALNA 14',
-        locality: 'NOWY TARG',
-        phone: '(018)263 33 56',
-        'teryt-place': '1211011',
-        'registry-number': '000000006068-W-12',
-        'id-resort-part-VII': '011',
-        'id-resort-part-VIII': '4580',
-        'benefits-for-children': null,
-        'covid-19': 'N',
-        toilet: 'Y',
-        ramp: 'Y',
-        'car-park': 'Y',
-        elevator: 'Y',
-        latitude: 49.4897578,
-        longitude: 20.0270743,
-        statistics: {
-          'provider-data': {
-            awaiting: 0,
-            removed: 0,
-            'average-period': 0,
-            update: '2023-08',
-          },
-          'computed-data': null,
-        },
-        dates: {
-          applicable: true,
-          date: '2026-02-02',
-          'date-situation-as-at': '2023-09-15',
-        },
-        'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 142 },
-      },
-    },
-    {
-      type: 'queue',
-      id: '05af67e9-8ad1-3029-e063-b4200a0af9d5',
+      id: '05d7a465-ebe0-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -482,14 +436,60 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2026-02-03',
-          'date-situation-as-at': '2023-09-15',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b965-3029-e063-b4200a0af9d5',
+      id: '05d7a465-0aa6-aa0c-e063-b4200a0aa3b9',
+      attributes: {
+        case: 1,
+        benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
+        'many-places': 'N',
+        provider:
+          'PODHALAŃSKI SZPITAL SPECJALISTYCZNY IM. JANA PAWŁA II W NOWYM TARGU',
+        'provider-code': '064/100005',
+        'regon-provider': '000308324',
+        'nip-provider': '7352178657',
+        'teryt-provider': '1211011',
+        place: 'ODDZIAŁ CHIRURGII URAZOWO-ORTOPEDYCZNEJ',
+        address: 'UL. SZPITALNA 14',
+        locality: 'NOWY TARG',
+        phone: '(018)263 33 56',
+        'teryt-place': '1211011',
+        'registry-number': '000000006068-W-12',
+        'id-resort-part-VII': '011',
+        'id-resort-part-VIII': '4580',
+        'benefits-for-children': null,
+        'covid-19': 'N',
+        toilet: 'Y',
+        ramp: 'Y',
+        'car-park': 'Y',
+        elevator: 'Y',
+        latitude: 49.4897578,
+        longitude: 20.0270743,
+        statistics: {
+          'provider-data': {
+            awaiting: 0,
+            removed: 0,
+            'average-period': 0,
+            update: '2023-08',
+          },
+          'computed-data': null,
+        },
+        dates: {
+          applicable: true,
+          date: '2026-05-25',
+          'date-situation-as-at': '2023-09-19',
+        },
+        'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 142 },
+      },
+    },
+    {
+      type: 'queue',
+      id: '05d7a465-1418-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -527,14 +527,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2026-07-27',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 226 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b961-3029-e063-b4200a0af9d5',
+      id: '05d7a465-1414-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -572,14 +572,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2026-07-27',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 280 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-cc6f-3029-e063-b4200a0af9d5',
+      id: '05d7a465-28f6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -618,14 +618,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2026-12-27',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 122 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-a247-3029-e063-b4200a0af9d5',
+      id: '05d7a463-0e5e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -663,14 +663,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2027-07-30',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 162 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b941-3029-e063-b4200a0af9d5',
+      id: '05d7a465-13f4-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -709,14 +709,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2028-05-01',
-          'date-situation-as-at': '2023-09-17',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 101 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b93d-3029-e063-b4200a0af9d5',
+      id: '05d7a465-13f0-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -755,14 +755,14 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2028-10-02',
-          'date-situation-as-at': '2023-09-17',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 135 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-a24b-3029-e063-b4200a0af9d5',
+      id: '05d7a463-0e62-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -800,7 +800,7 @@ export const req_2_page_6: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2028-10-13',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 127 },
       },

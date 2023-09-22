@@ -1,4 +1,4 @@
-// this file was auto-generated at 2023-09-19T11:47:20.345Z, do not modify it
+// this file was auto-generated at 2023-09-21T11:06:38.859Z, do not modify it
 import { NfzQueuesApiResponse } from '../../../../../src/modules/nfz/modules/queues/modules/api-client/interfaces/response.interface';
 
 export const req_2_page_5: NfzQueuesApiResponse = {
@@ -11,7 +11,7 @@ export const req_2_page_5: NfzQueuesApiResponse = {
     limit: 25,
     provider: 'Narodowy Fundusz Zdrowia',
     'date-published': '2019-02-26T10:49:23+01:00',
-    'date-modified': '2023-09-19T13:47:23+02:00',
+    'date-modified': '2023-09-21T13:06:43+02:00',
     description:
       'Zasób zwraca pierwszy dostępny termin leczenia dla każdego świadczenia medycznego zgodnie z wybranymi parametrami wyszukiwania. Odpowiedź zawiera szczegółowe informacje  oraz listę świadczeń medycznych we właściwej kolejności wyświetlania (według pierwszej dostępnego terminu leczenia)',
     keywords:
@@ -32,53 +32,7 @@ export const req_2_page_5: NfzQueuesApiResponse = {
   data: [
     {
       type: 'queue',
-      id: '05af67e8-f451-3029-e063-b4200a0af9d5',
-      attributes: {
-        case: 1,
-        benefit: 'REWIZJA PO ENDOPROTEZOPLASTYCE STAWU BIODROWEGO',
-        'many-places': 'N',
-        provider:
-          'SZPITAL SPECJALISTYCZNY IM. LUDWIKA RYDYGIERA W KRAKOWIE SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
-        'provider-code': '061/200324',
-        'regon-provider': '121188694',
-        'nip-provider': '6783105119',
-        'teryt-provider': '1261011',
-        place: 'ODDZIAŁ ORTOPEDII I TRAUMATOLOGII NARZĄDU RUCHU',
-        address: 'OS. ZŁOTEJ JESIENI 1',
-        locality: 'KRAKÓW',
-        phone: '+48 12 646 83 16',
-        'teryt-place': '1261011',
-        'registry-number': '000000024512-W-12',
-        'id-resort-part-VII': '014',
-        'id-resort-part-VIII': '4580',
-        'benefits-for-children': null,
-        'covid-19': 'N',
-        toilet: 'Y',
-        ramp: 'Y',
-        'car-park': 'Y',
-        elevator: 'Y',
-        latitude: 50.0927879,
-        longitude: 20.0201686,
-        statistics: {
-          'provider-data': {
-            awaiting: 4,
-            removed: 3,
-            'average-period': 1,
-            update: '2023-08',
-          },
-          'computed-data': null,
-        },
-        dates: {
-          applicable: true,
-          date: '2024-11-25',
-          'date-situation-as-at': '2023-09-18',
-        },
-        'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 16 },
-      },
-    },
-    {
-      type: 'queue',
-      id: '05af67e9-32e3-3029-e063-b4200a0af9d5',
+      id: '05d7a465-8fb6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -117,14 +71,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-11-25',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 76 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-32df-3029-e063-b4200a0af9d5',
+      id: '05d7a465-8fb2-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -163,14 +117,60 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-11-25',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 170 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-a695-3029-e063-b4200a0af9d5',
+      id: '05d7a465-56e8-aa0c-e063-b4200a0aa3b9',
+      attributes: {
+        case: 1,
+        benefit: 'REWIZJA PO ENDOPROTEZOPLASTYCE STAWU BIODROWEGO',
+        'many-places': 'N',
+        provider:
+          'SZPITAL SPECJALISTYCZNY IM. LUDWIKA RYDYGIERA W KRAKOWIE SPÓŁKA Z OGRANICZONĄ ODPOWIEDZIALNOŚCIĄ',
+        'provider-code': '061/200324',
+        'regon-provider': '121188694',
+        'nip-provider': '6783105119',
+        'teryt-provider': '1261011',
+        place: 'ODDZIAŁ ORTOPEDII I TRAUMATOLOGII NARZĄDU RUCHU',
+        address: 'OS. ZŁOTEJ JESIENI 1',
+        locality: 'KRAKÓW',
+        phone: '+48 12 646 83 16',
+        'teryt-place': '1261011',
+        'registry-number': '000000024512-W-12',
+        'id-resort-part-VII': '014',
+        'id-resort-part-VIII': '4580',
+        'benefits-for-children': null,
+        'covid-19': 'N',
+        toilet: 'Y',
+        ramp: 'Y',
+        'car-park': 'Y',
+        elevator: 'Y',
+        latitude: 50.0927879,
+        longitude: 20.0201686,
+        statistics: {
+          'provider-data': {
+            awaiting: 4,
+            removed: 3,
+            'average-period': 1,
+            update: '2023-08',
+          },
+          'computed-data': null,
+        },
+        dates: {
+          applicable: true,
+          date: '2024-11-26',
+          'date-situation-as-at': '2023-09-20',
+        },
+        'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 16 },
+      },
+    },
+    {
+      type: 'queue',
+      id: '05d7a465-0ba4-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -208,15 +208,15 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-11-27',
-          'date-situation-as-at': '2023-09-18',
+          date: '2024-11-28',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-1759-3029-e063-b4200a0af9d5',
+      id: '05d7a465-9918-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -254,14 +254,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-12-04',
-          'date-situation-as-at': '2023-09-16',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-8651-3029-e063-b4200a0af9d5',
+      id: '05d7a465-e75a-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -300,14 +300,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-12-09',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-4cdd-3029-e063-b4200a0af9d5',
+      id: '05d7a462-b306-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -346,14 +346,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-12-10',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-cea3-3029-e063-b4200a0af9d5',
+      id: '05d7a465-2b0c-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -391,14 +391,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-12-18',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-a383-3029-e063-b4200a0af9d5',
+      id: '05d7a465-0456-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -436,14 +436,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-12-18',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-8647-3029-e063-b4200a0af9d5',
+      id: '05d7a465-e750-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -481,14 +481,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-01-03',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-c959-3029-e063-b4200a0af9d5',
+      id: '05d7a465-2bda-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -527,14 +527,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-01-17',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-d411-3029-e063-b4200a0af9d5',
+      id: '05d7a465-3046-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -572,14 +572,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-01-24',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-d931-3029-e063-b4200a0af9d5',
+      id: '05d7a465-356a-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU BIODROWEGO',
@@ -617,14 +617,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-02-07',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 168 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-c3fb-3029-e063-b4200a0af9d5',
+      id: '05d7a466-235c-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -663,14 +663,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-02-11',
-          'date-situation-as-at': '2023-09-14',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-bd69-3029-e063-b4200a0af9d5',
+      id: '05d7a465-1e20-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -709,14 +709,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-02-21',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 101 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-1bdf-3029-e063-b4200a0af9d5',
+      id: '05d7a465-78aa-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -755,14 +755,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-02-25',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-b943-3029-e063-b4200a0af9d5',
+      id: '05d7a465-13f6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'REWIZJA PO ENDOPROTEZOPLASTYCE STAWU KOLANOWEGO',
@@ -801,14 +801,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-03-03',
-          'date-situation-as-at': '2023-09-17',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 10 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-e7fd-3029-e063-b4200a0af9d5',
+      id: '05d7a465-4454-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -846,14 +846,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-03-03',
-          'date-situation-as-at': '2023-09-17',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67ea-1dff-3029-e063-b4200a0af9d5',
+      id: '05d7a466-82fa-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -891,14 +891,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-04-04',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-9f41-3029-e063-b4200a0af9d5',
+      id: '05d7a465-1fc6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -936,14 +936,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-04-28',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 185 },
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-bf33-3029-e063-b4200a0af9d5',
+      id: '05d7a463-21d6-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -981,15 +981,15 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2025-05-20',
-          'date-situation-as-at': '2023-09-18',
+          date: '2025-06-03',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-27f9-3029-e063-b4200a0af9d5',
+      id: '05d7a465-84bc-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -1028,14 +1028,14 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-06-04',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-a699-3029-e063-b4200a0af9d5',
+      id: '05d7a465-0ba8-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -1073,15 +1073,15 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2025-06-10',
-          'date-situation-as-at': '2023-09-18',
+          date: '2025-06-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e8-9ccb-3029-e063-b4200a0af9d5',
+      id: '05d7a465-1d5e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -1118,15 +1118,15 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2025-06-24',
-          'date-situation-as-at': '2023-09-18',
+          date: '2025-07-08',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-b46d-3029-e063-b4200a0af9d5',
+      id: '05d7a466-1742-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ENDOPROTEZOPLASTYKA STAWU KOLANOWEGO',
@@ -1164,7 +1164,7 @@ export const req_2_page_5: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-08-05',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': { 'type-of-benefit': 1, year: 2022, amount: 381 },
       },

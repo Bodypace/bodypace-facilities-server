@@ -139,10 +139,10 @@ describe('NfzQueuesService', () => {
     beforeEach(() => {
       query = {
         case: 1,
-        benefitForChildren: 'false',
-        benefit: 'endokrynolog',
+        benefitForChildren: 'FALSE',
+        benefit: 'ENDOKRYNO',
         province: 12,
-        locality: 'gliwice',
+        locality: 'KATOWICE',
       };
     });
 
@@ -354,21 +354,21 @@ describe('NfzQueuesService', () => {
     });
 
     it.each([
-      ['benefitForChildren is same but uppercase', 'benefitForChildren'],
-      ['benefit is same but uppercase', 'benefit'],
-      ['locality is same but uppercase', 'locality'],
+      ['benefitForChildren is same but lowercase', 'benefitForChildren'],
+      ['benefit is same but lowercase', 'benefit'],
+      ['locality is same but lowercase', 'locality'],
     ])(
       'should not order cache to write the same query and queues twice - %s',
       async (
         _,
-        fieldToUpperCase: 'benefitForChildren' | 'benefit' | 'locality',
+        fieldToLowerCase: 'benefitForChildren' | 'benefit' | 'locality',
       ) => {
         const getMethod = jest.spyOn(nfzQueuesCacheService, 'get');
         const storeMethod = jest.spyOn(nfzQueuesCacheService, 'store');
 
-        expect(query[fieldToUpperCase]).toBeTruthy();
-        expect(query[fieldToUpperCase]?.toUpperCase()).not.toEqual(
-          query[fieldToUpperCase],
+        expect(query[fieldToLowerCase]).toBeTruthy();
+        expect(query[fieldToLowerCase]?.toLowerCase()).not.toEqual(
+          query[fieldToLowerCase],
         );
 
         await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
@@ -377,7 +377,7 @@ describe('NfzQueuesService', () => {
         await expect(
           nfzQueuesService.findAll({
             ...query,
-            [fieldToUpperCase]: query[fieldToUpperCase]?.toUpperCase(),
+            [fieldToLowerCase]: query[fieldToLowerCase]?.toLowerCase(),
           }),
         ).resolves.toStrictEqual(mockedValues.api.fetchAll);
 
@@ -385,7 +385,7 @@ describe('NfzQueuesService', () => {
         expect(getMethod).toHaveBeenNthCalledWith(1, query);
         expect(getMethod).toHaveBeenNthCalledWith(2, {
           ...query,
-          [fieldToUpperCase]: query[fieldToUpperCase]?.toUpperCase(),
+          [fieldToLowerCase]: query[fieldToLowerCase]?.toLowerCase(),
         });
 
         expect(storeMethod).toHaveBeenCalledTimes(1);

@@ -1,4 +1,4 @@
-// this file was auto-generated at 2023-09-19T11:47:20.345Z, do not modify it
+// this file was auto-generated at 2023-09-21T11:06:38.859Z, do not modify it
 import { NfzQueuesApiResponse } from '../../../../../src/modules/nfz/modules/queues/modules/api-client/interfaces/response.interface';
 
 export const req_1_page_1: NfzQueuesApiResponse = {
@@ -11,7 +11,7 @@ export const req_1_page_1: NfzQueuesApiResponse = {
     limit: 25,
     provider: 'Narodowy Fundusz Zdrowia',
     'date-published': '2019-02-26T10:49:23+01:00',
-    'date-modified': '2023-09-19T13:44:49+02:00',
+    'date-modified': '2023-09-21T13:06:39+02:00',
     description:
       'Zasób zwraca pierwszy dostępny termin leczenia dla każdego świadczenia medycznego zgodnie z wybranymi parametrami wyszukiwania. Odpowiedź zawiera szczegółowe informacje  oraz listę świadczeń medycznych we właściwej kolejności wyświetlania (według pierwszej dostępnego terminu leczenia)',
     keywords:
@@ -32,7 +32,7 @@ export const req_1_page_1: NfzQueuesApiResponse = {
   data: [
     {
       type: 'queue',
-      id: '05af67ea-07eb-3029-e063-b4200a0af9d5',
+      id: '05d7a466-5832-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -70,15 +70,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2023-11-08',
-          'date-situation-as-at': '2023-09-18',
+          date: '2023-11-15',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-5767-3029-e063-b4200a0af9d5',
+      id: '05d7a465-b7a2-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ODDZIAŁ ENDOKRYNOLOGICZNY',
@@ -116,15 +116,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-01-20',
-          'date-situation-as-at': '2023-09-18',
+          date: '2024-01-23',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67ea-0e95-3029-e063-b4200a0af9d5',
+      id: '05d7a466-5ed0-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ODDZIAŁ ENDOKRYNOLOGICZNY',
@@ -162,15 +162,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-01-22',
-          'date-situation-as-at': '2023-09-17',
+          date: '2024-01-29',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-19cb-3029-e063-b4200a0af9d5',
+      id: '05d7a463-7634-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ODDZIAŁ ENDOKRYNOLOGICZNY',
@@ -208,15 +208,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-02-22',
-          'date-situation-as-at': '2023-09-17',
+          date: '2024-02-27',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-fd29-3029-e063-b4200a0af9d5',
+      id: '05d7a463-8264-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ODDZIAŁ ENDOKRYNOLOGICZNY DLA DZIECI',
@@ -255,15 +255,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-06-27',
-          'date-situation-as-at': '2023-09-18',
+          date: '2024-07-02',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-0c01-3029-e063-b4200a0af9d5',
+      id: '05d7a463-814c-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -302,14 +302,14 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-08-27',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-d01f-3029-e063-b4200a0af9d5',
+      id: '05d7a466-5212-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -347,14 +347,14 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-10-10',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-1349-3029-e063-b4200a0af9d5',
+      id: '05d7a463-6248-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -392,14 +392,14 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2024-10-17',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-1a5b-3029-e063-b4200a0af9d5',
+      id: '05d7a463-697a-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -437,15 +437,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2024-11-12',
-          'date-situation-as-at': '2023-09-18',
+          date: '2024-11-13',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-64d1-3029-e063-b4200a0af9d5',
+      id: '05d7a463-c14e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -482,15 +482,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2025-01-29',
-          'date-situation-as-at': '2023-09-15',
+          date: '2025-02-04',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e7-19d5-3029-e063-b4200a0af9d5',
+      id: '05d7a463-763e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -528,15 +528,15 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2025-02-07',
-          'date-situation-as-at': '2023-09-14',
+          date: '2025-02-14',
+          'date-situation-as-at': '2023-09-19',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-327d-3029-e063-b4200a0af9d5',
+      id: '05d7a465-837e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -574,14 +574,14 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-09-23',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e6-f5c5-3029-e063-b4200a0af9d5',
+      id: '05d7a463-7adc-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -620,14 +620,14 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         dates: {
           applicable: true,
           date: '2025-12-15',
-          'date-situation-as-at': '2023-09-18',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },
     },
     {
       type: 'queue',
-      id: '05af67e9-a7ad-3029-e063-b4200a0af9d5',
+      id: '05d7a466-2b9e-aa0c-e063-b4200a0aa3b9',
       attributes: {
         case: 1,
         benefit: 'ŚWIADCZENIA Z ZAKRESU ENDOKRYNOLOGII',
@@ -665,8 +665,8 @@ export const req_1_page_1: NfzQueuesApiResponse = {
         },
         dates: {
           applicable: true,
-          date: '2026-02-24',
-          'date-situation-as-at': '2023-09-18',
+          date: '2026-02-23',
+          'date-situation-as-at': '2023-09-20',
         },
         'benefits-provided': null,
       },

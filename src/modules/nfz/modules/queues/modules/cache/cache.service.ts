@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { DataSource, ILike, IsNull } from 'typeorm';
+import { DataSource, FindOptionsWhere, ILike } from 'typeorm';
 import { NfzQueuesApiQuery } from '../api-client/interfaces/query.interface';
 import { NfzQueuesApiQueue } from '../api-client/interfaces/queue.interface';
 import { CachedNfzQueue } from './entities/cached-queue.entity';
@@ -51,24 +51,71 @@ export class NfzQueuesCacheService {
     }
   }
 
+  private async getMatchingQueries(
+    query: NfzQueuesApiQuery,
+  ): Promise<CachedNfzQueuesQuery[]> {
+    const queryBuilder = this.dataSource
+      .getRepository(CachedNfzQueuesQuery)
+      .createQueryBuilder('query')
+      .where('(query.case = :case)', { case: query.case })
+      .andWhere('(query.benefitForChildren LIKE :benefitForChildren)', {
+        benefitForChildren: query.benefitForChildren.toUpperCase(),
+      });
+
+    if (query.benefit) {
+      queryBuilder.andWhere(
+        "(:benefit LIKE ('%' || query.benefit || '%') or query.benefit IS NULL)",
+        { benefit: query.benefit.toUpperCase() },
+      );
+    } else {
+      queryBuilder.andWhere('(query.benefit IS NULL)');
+    }
+
+    if (query.province) {
+      queryBuilder.andWhere(
+        '(query.province IS NULL OR query.province = :province)',
+        { province: query.province },
+      );
+    } else {
+      queryBuilder.andWhere('(query.province IS NULL)');
+    }
+
+    if (query.locality) {
+      queryBuilder.andWhere(
+        "(:locality LIKE (query.locality || '%') OR query.locality IS NULL)",
+        { locality: query.locality.toUpperCase() },
+      );
+    } else {
+      queryBuilder.andWhere('(query.locality IS NULL)');
+    }
+
+    const queries = await queryBuilder.getMany();
+    return queries;
+  }
+
   async get(query: NfzQueuesApiQuery): Promise<NfzQueuesApiQueue[] | null> {
     try {
-      const queriesRepository =
-        this.dataSource.getRepository(CachedNfzQueuesQuery);
-
-      const queries = await queriesRepository.findBy({
-        case: query.case,
-        benefitForChildren: ILike(query.benefitForChildren),
-        benefit: query.benefit ? ILike(query.benefit) : IsNull(),
-        province: query.province ? query.province : IsNull(),
-        locality: query.locality ? ILike(query.locality) : IsNull(),
-      });
+      const queries = await this.getMatchingQueries(query);
 
       if (queries.length === 0) {
         return null;
       }
 
       const queuesRepository = this.dataSource.getRepository(CachedNfzQueue);
+
+      const options: FindOptionsWhere<CachedNfzQueue> = {};
+
+      if (query.benefit) {
+        options.benefit = ILike(`%${query.benefit}%`);
+      }
+
+      if (query.province) {
+        options.terytPlace = ILike(`${query.province * 2}%`);
+      }
+
+      if (query.locality) {
+        options.locality = ILike(`${query.locality}%`);
+      }
 
       const queues = await queuesRepository.find({
         relations: {
@@ -83,6 +130,7 @@ export class NfzQueuesCacheService {
           cachedQuery: {
             id: queries[queries.length - 1].id,
           },
+          ...options,
         },
       });
 
