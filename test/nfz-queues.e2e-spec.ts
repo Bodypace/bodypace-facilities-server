@@ -81,7 +81,7 @@ describe('NfzQueuesController (e2e)', () => {
   });
 
   it('startup should log that dependencies are initialized (testing detail)', () => {
-    expect(logger.log).toHaveBeenCalledTimes(13);
+    expect(logger.log).toHaveBeenCalledTimes(14);
     expect(logger.log).toHaveBeenNthCalledWith(
       1,
       'RootTestModule dependencies initialized',
@@ -99,51 +99,56 @@ describe('NfzQueuesController (e2e)', () => {
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       4,
-      'NfzModule dependencies initialized',
+      'GeocoderModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       5,
-      'HttpModule dependencies initialized',
+      'NfzModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       6,
-      'NfzQueuesApiClientModule dependencies initialized',
+      'HttpModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       7,
-      'TypeOrmCoreModule dependencies initialized',
+      'NfzQueuesApiClientModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       8,
-      'TypeOrmModule dependencies initialized',
+      'TypeOrmCoreModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       9,
-      'NfzQueuesCacheModule dependencies initialized',
+      'TypeOrmModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       10,
-      'NfzQueuesModule dependencies initialized',
+      'NfzQueuesCacheModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       11,
+      'NfzQueuesModule dependencies initialized',
+      'InstanceLoader',
+    );
+    expect(logger.log).toHaveBeenNthCalledWith(
+      12,
       'NfzQueuesController {/nfz}:',
       'RoutesResolver',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
-      12,
+      13,
       'Mapped {/nfz/queues, GET} route',
       'RouterExplorer',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
-      13,
+      14,
       'Nest application successfully started',
       'NestApplication',
     );
@@ -169,7 +174,7 @@ describe('NfzQueuesController (e2e)', () => {
           .expect(200)
           .expect(req_1_page_1.data);
 
-        expect(logger.log).toHaveBeenCalledTimes(18);
+        expect(logger.log).toHaveBeenCalledTimes(19);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -187,76 +192,81 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           4,
-          'NfzModule dependencies initialized',
+          'GeocoderModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           5,
-          'HttpModule dependencies initialized',
+          'NfzModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           6,
-          'NfzQueuesApiClientModule dependencies initialized',
+          'HttpModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           7,
-          'TypeOrmCoreModule dependencies initialized',
+          'NfzQueuesApiClientModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           8,
-          'TypeOrmModule dependencies initialized',
+          'TypeOrmCoreModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           9,
-          'NfzQueuesCacheModule dependencies initialized',
+          'TypeOrmModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           10,
-          'NfzQueuesModule dependencies initialized',
+          'NfzQueuesCacheModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          12,
           'NfzQueuesController {/nfz}:',
           'RoutesResolver',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          12,
+          13,
           'Mapped {/nfz/queues, GET} route',
           'RouterExplorer',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          13,
+          14,
           'Nest application successfully started',
           'NestApplication',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          14,
+          15,
           '#findAll()',
           'NfzQueuesController',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          15,
+          16,
           '#findAll() - cache miss',
           'NfzQueuesService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          18,
+          19,
           '#fetchAll() all queues = 14, pages = 1',
           'NfzQueuesApiClientService',
         );
@@ -282,7 +292,7 @@ describe('NfzQueuesController (e2e)', () => {
           .expect(200)
           .expect(req_1_page_1.data);
 
-        expect(logger.log).toHaveBeenCalledTimes(18);
+        expect(logger.log).toHaveBeenCalledTimes(19);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -300,76 +310,81 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           4,
-          'NfzModule dependencies initialized',
+          'GeocoderModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           5,
-          'HttpModule dependencies initialized',
+          'NfzModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           6,
-          'NfzQueuesApiClientModule dependencies initialized',
+          'HttpModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           7,
-          'TypeOrmCoreModule dependencies initialized',
+          'NfzQueuesApiClientModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           8,
-          'TypeOrmModule dependencies initialized',
+          'TypeOrmCoreModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           9,
-          'NfzQueuesCacheModule dependencies initialized',
+          'TypeOrmModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           10,
-          'NfzQueuesModule dependencies initialized',
+          'NfzQueuesCacheModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          12,
           'NfzQueuesController {/nfz}:',
           'RoutesResolver',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          12,
+          13,
           'Mapped {/nfz/queues, GET} route',
           'RouterExplorer',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          13,
+          14,
           'Nest application successfully started',
           'NestApplication',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          14,
+          15,
           '#findAll()',
           'NfzQueuesController',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          15,
+          16,
           '#findAll() - cache miss',
           'NfzQueuesService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          18,
+          19,
           '#fetchAll() all queues = 14, pages = 1',
           'NfzQueuesApiClientService',
         );
@@ -409,7 +424,7 @@ describe('NfzQueuesController (e2e)', () => {
             ...req_2_page_6.data,
           ]);
 
-        expect(logger.log).toHaveBeenCalledTimes(23);
+        expect(logger.log).toHaveBeenCalledTimes(24);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -427,101 +442,106 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           4,
-          'NfzModule dependencies initialized',
+          'GeocoderModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           5,
-          'HttpModule dependencies initialized',
+          'NfzModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           6,
-          'NfzQueuesApiClientModule dependencies initialized',
+          'HttpModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           7,
-          'TypeOrmCoreModule dependencies initialized',
+          'NfzQueuesApiClientModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           8,
-          'TypeOrmModule dependencies initialized',
+          'TypeOrmCoreModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           9,
-          'NfzQueuesCacheModule dependencies initialized',
+          'TypeOrmModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           10,
-          'NfzQueuesModule dependencies initialized',
+          'NfzQueuesCacheModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          12,
           'NfzQueuesController {/nfz}:',
           'RoutesResolver',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          12,
+          13,
           'Mapped {/nfz/queues, GET} route',
           'RouterExplorer',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          13,
+          14,
           'Nest application successfully started',
           'NestApplication',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          14,
+          15,
           '#findAll()',
           'NfzQueuesController',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          15,
+          16,
           '#findAll() - cache miss',
           'NfzQueuesService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          16,
+          17,
           '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endo","province":"6"}',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          17,
+          18,
           '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endo&province=06',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          18,
+          19,
           '#fetchAll() all queues = 142, pages = 6',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          19,
+          20,
           '#fetchAll() network request no. 2, url = https://api.nfz.gov.pl/app-itl-api/queues?page=2&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          20,
+          21,
           '#fetchAll() network request no. 3, url = https://api.nfz.gov.pl/app-itl-api/queues?page=3&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          21,
+          22,
           '#fetchAll() network request no. 4, url = https://api.nfz.gov.pl/app-itl-api/queues?page=4&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          22,
+          23,
           '#fetchAll() network request no. 5, url = https://api.nfz.gov.pl/app-itl-api/queues?page=5&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          23,
+          24,
           '#fetchAll() network request no. 6, url = https://api.nfz.gov.pl/app-itl-api/queues?page=6&limit=25&format=json&case=1&province=06&benefit=endo',
           'NfzQueuesApiClientService',
         );
@@ -558,7 +578,7 @@ describe('NfzQueuesController (e2e)', () => {
             statusCode: 400,
           });
 
-        expect(logger.log).toHaveBeenCalledTimes(13);
+        expect(logger.log).toHaveBeenCalledTimes(14);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -576,51 +596,56 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           4,
-          'NfzModule dependencies initialized',
+          'GeocoderModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           5,
-          'HttpModule dependencies initialized',
+          'NfzModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           6,
-          'NfzQueuesApiClientModule dependencies initialized',
+          'HttpModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           7,
-          'TypeOrmCoreModule dependencies initialized',
+          'NfzQueuesApiClientModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           8,
-          'TypeOrmModule dependencies initialized',
+          'TypeOrmCoreModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           9,
-          'NfzQueuesCacheModule dependencies initialized',
+          'TypeOrmModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           10,
-          'NfzQueuesModule dependencies initialized',
+          'NfzQueuesCacheModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          12,
           'NfzQueuesController {/nfz}:',
           'RoutesResolver',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          12,
+          13,
           'Mapped {/nfz/queues, GET} route',
           'RouterExplorer',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          13,
+          14,
           'Nest application successfully started',
           'NestApplication',
         );
@@ -661,7 +686,7 @@ describe('NfzQueuesController (e2e)', () => {
             statusCode: 400,
           });
 
-        expect(logger.log).toHaveBeenCalledTimes(13);
+        expect(logger.log).toHaveBeenCalledTimes(14);
         expect(logger.log).toHaveBeenNthCalledWith(
           1,
           'RootTestModule dependencies initialized',
@@ -679,51 +704,56 @@ describe('NfzQueuesController (e2e)', () => {
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           4,
-          'NfzModule dependencies initialized',
+          'GeocoderModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           5,
-          'HttpModule dependencies initialized',
+          'NfzModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           6,
-          'NfzQueuesApiClientModule dependencies initialized',
+          'HttpModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           7,
-          'TypeOrmCoreModule dependencies initialized',
+          'NfzQueuesApiClientModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           8,
-          'TypeOrmModule dependencies initialized',
+          'TypeOrmCoreModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           9,
-          'NfzQueuesCacheModule dependencies initialized',
+          'TypeOrmModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           10,
-          'NfzQueuesModule dependencies initialized',
+          'NfzQueuesCacheModule dependencies initialized',
           'InstanceLoader',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
           11,
+          'NfzQueuesModule dependencies initialized',
+          'InstanceLoader',
+        );
+        expect(logger.log).toHaveBeenNthCalledWith(
+          12,
           'NfzQueuesController {/nfz}:',
           'RoutesResolver',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          12,
+          13,
           'Mapped {/nfz/queues, GET} route',
           'RouterExplorer',
         );
         expect(logger.log).toHaveBeenNthCalledWith(
-          13,
+          14,
           'Nest application successfully started',
           'NestApplication',
         );
@@ -760,7 +790,7 @@ describe('NfzQueuesController (e2e)', () => {
             .expect(200)
             .expect(req_1_page_1.data);
 
-          expect(logger.log).toHaveBeenCalledTimes(20);
+          expect(logger.log).toHaveBeenCalledTimes(21);
           expect(logger.log).toHaveBeenNthCalledWith(
             1,
             'RootTestModule dependencies initialized',
@@ -778,86 +808,91 @@ describe('NfzQueuesController (e2e)', () => {
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             4,
-            'NfzModule dependencies initialized',
+            'GeocoderModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             5,
-            'HttpModule dependencies initialized',
+            'NfzModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             6,
-            'NfzQueuesApiClientModule dependencies initialized',
+            'HttpModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             7,
-            'TypeOrmCoreModule dependencies initialized',
+            'NfzQueuesApiClientModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             8,
-            'TypeOrmModule dependencies initialized',
+            'TypeOrmCoreModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             9,
-            'NfzQueuesCacheModule dependencies initialized',
+            'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             10,
-            'NfzQueuesModule dependencies initialized',
+            'NfzQueuesCacheModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             11,
+            'NfzQueuesModule dependencies initialized',
+            'InstanceLoader',
+          );
+          expect(logger.log).toHaveBeenNthCalledWith(
+            12,
             'NfzQueuesController {/nfz}:',
             'RoutesResolver',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            12,
+            13,
             'Mapped {/nfz/queues, GET} route',
             'RouterExplorer',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            13,
+            14,
             'Nest application successfully started',
             'NestApplication',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            14,
+            15,
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            15,
+            16,
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            16,
+            17,
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            17,
+            18,
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            18,
+            19,
             '#fetchAll() all queues = 14, pages = 1',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            19,
+            20,
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            20,
+            21,
             '#findAll() - cache hit',
             'NfzQueuesService',
           );
@@ -892,7 +927,7 @@ describe('NfzQueuesController (e2e)', () => {
             .expect(200)
             .expect(req_1_page_1.data);
 
-          expect(logger.aggregator).toHaveBeenCalledTimes(25);
+          expect(logger.aggregator).toHaveBeenCalledTimes(26);
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             1,
             'log',
@@ -911,134 +946,139 @@ describe('NfzQueuesController (e2e)', () => {
             'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
-          expect(logger.aggregator).toHaveBeenNthCalledWith(
+          expect(logger.log).toHaveBeenNthCalledWith(
             4,
-            'log',
-            'NfzModule dependencies initialized',
+            'GeocoderModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             5,
             'log',
-            'HttpModule dependencies initialized',
+            'NfzModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             6,
             'log',
-            'NfzQueuesApiClientModule dependencies initialized',
+            'HttpModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             7,
             'log',
-            'TypeOrmCoreModule dependencies initialized',
+            'NfzQueuesApiClientModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             8,
             'log',
-            'TypeOrmModule dependencies initialized',
+            'TypeOrmCoreModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             9,
             'log',
-            'NfzQueuesCacheModule dependencies initialized',
+            'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             10,
             'log',
-            'NfzQueuesModule dependencies initialized',
+            'NfzQueuesCacheModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             11,
             'log',
+            'NfzQueuesModule dependencies initialized',
+            'InstanceLoader',
+          );
+          expect(logger.aggregator).toHaveBeenNthCalledWith(
+            12,
+            'log',
             'NfzQueuesController {/nfz}:',
             'RoutesResolver',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            12,
+            13,
             'log',
             'Mapped {/nfz/queues, GET} route',
             'RouterExplorer',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            13,
+            14,
             'log',
             'Nest application successfully started',
             'NestApplication',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            14,
+            15,
             'log',
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            15,
+            16,
             'log',
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            16,
-            'log',
-            '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
-            'NfzQueuesApiClientService',
-          );
-          expect(logger.aggregator).toHaveBeenNthCalledWith(
             17,
             'log',
-            '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
+            '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             18,
             'log',
-            '#fetchAll() all queues = 14, pages = 1',
+            '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             19,
             'log',
+            '#fetchAll() all queues = 14, pages = 1',
+            'NfzQueuesApiClientService',
+          );
+          expect(logger.aggregator).toHaveBeenNthCalledWith(
+            20,
+            'log',
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            20,
+            21,
             'warn',
             'could not read data from database: Connection with sqlite database is not established. Check connection configuration.',
             'NfzQueuesCacheService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            21,
+            22,
             'log',
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            22,
+            23,
             'log',
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            23,
+            24,
             'log',
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            24,
+            25,
             'log',
             '#fetchAll() all queues = 14, pages = 1',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            25,
+            26,
             'warn',
             'could not create a transaction for database: Connection with sqlite database is not established. Check connection configuration.',
             'NfzQueuesCacheService',
@@ -1093,7 +1133,7 @@ describe('NfzQueuesController (e2e)', () => {
               ...req_2_page_6.data,
             ]);
 
-          expect(logger.log).toHaveBeenCalledTimes(28);
+          expect(logger.log).toHaveBeenCalledTimes(29);
           expect(logger.log).toHaveBeenNthCalledWith(
             1,
             'RootTestModule dependencies initialized',
@@ -1111,126 +1151,131 @@ describe('NfzQueuesController (e2e)', () => {
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             4,
-            'NfzModule dependencies initialized',
+            'GeocoderModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             5,
-            'HttpModule dependencies initialized',
+            'NfzModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             6,
-            'NfzQueuesApiClientModule dependencies initialized',
+            'HttpModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             7,
-            'TypeOrmCoreModule dependencies initialized',
+            'NfzQueuesApiClientModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             8,
-            'TypeOrmModule dependencies initialized',
+            'TypeOrmCoreModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             9,
-            'NfzQueuesCacheModule dependencies initialized',
+            'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             10,
-            'NfzQueuesModule dependencies initialized',
+            'NfzQueuesCacheModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
             11,
+            'NfzQueuesModule dependencies initialized',
+            'InstanceLoader',
+          );
+          expect(logger.log).toHaveBeenNthCalledWith(
+            12,
             'NfzQueuesController {/nfz}:',
             'RoutesResolver',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            12,
+            13,
             'Mapped {/nfz/queues, GET} route',
             'RouterExplorer',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            13,
+            14,
             'Nest application successfully started',
             'NestApplication',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            14,
+            15,
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            15,
+            16,
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            16,
+            17,
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            17,
+            18,
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            18,
+            19,
             '#fetchAll() all queues = 14, pages = 1',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            19,
+            20,
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            20,
+            21,
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            21,
+            22,
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endo","province":"6"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            22,
+            23,
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endo&province=06',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            23,
+            24,
             '#fetchAll() all queues = 142, pages = 6',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            24,
+            25,
             '#fetchAll() network request no. 2, url = https://api.nfz.gov.pl/app-itl-api/queues?page=2&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            25,
+            26,
             '#fetchAll() network request no. 3, url = https://api.nfz.gov.pl/app-itl-api/queues?page=3&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            26,
+            27,
             '#fetchAll() network request no. 4, url = https://api.nfz.gov.pl/app-itl-api/queues?page=4&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            27,
+            28,
             '#fetchAll() network request no. 5, url = https://api.nfz.gov.pl/app-itl-api/queues?page=5&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.log).toHaveBeenNthCalledWith(
-            28,
+            29,
             '#fetchAll() network request no. 6, url = https://api.nfz.gov.pl/app-itl-api/queues?page=6&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
@@ -1279,7 +1324,7 @@ describe('NfzQueuesController (e2e)', () => {
               ...req_2_page_6.data,
             ]);
 
-          expect(logger.aggregator).toHaveBeenCalledTimes(30);
+          expect(logger.aggregator).toHaveBeenCalledTimes(31);
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             1,
             'log',
@@ -1298,164 +1343,169 @@ describe('NfzQueuesController (e2e)', () => {
             'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
-          expect(logger.aggregator).toHaveBeenNthCalledWith(
+          expect(logger.log).toHaveBeenNthCalledWith(
             4,
-            'log',
-            'NfzModule dependencies initialized',
+            'GeocoderModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             5,
             'log',
-            'HttpModule dependencies initialized',
+            'NfzModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             6,
             'log',
-            'NfzQueuesApiClientModule dependencies initialized',
+            'HttpModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             7,
             'log',
-            'TypeOrmCoreModule dependencies initialized',
+            'NfzQueuesApiClientModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             8,
             'log',
-            'TypeOrmModule dependencies initialized',
+            'TypeOrmCoreModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             9,
             'log',
-            'NfzQueuesCacheModule dependencies initialized',
+            'TypeOrmModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             10,
             'log',
-            'NfzQueuesModule dependencies initialized',
+            'NfzQueuesCacheModule dependencies initialized',
             'InstanceLoader',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
             11,
             'log',
+            'NfzQueuesModule dependencies initialized',
+            'InstanceLoader',
+          );
+          expect(logger.aggregator).toHaveBeenNthCalledWith(
+            12,
+            'log',
             'NfzQueuesController {/nfz}:',
             'RoutesResolver',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            12,
+            13,
             'log',
             'Mapped {/nfz/queues, GET} route',
             'RouterExplorer',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            13,
+            14,
             'log',
             'Nest application successfully started',
             'NestApplication',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            14,
+            15,
             'log',
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            15,
+            16,
             'log',
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            16,
+            17,
             'log',
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endokryno","province":"12","locality":"KATOWICE"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            17,
+            18,
             'log',
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endokryno&province=12&locality=KATOWICE',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            18,
+            19,
             'log',
             '#fetchAll() all queues = 14, pages = 1',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            19,
+            20,
             'log',
             '#findAll()',
             'NfzQueuesController',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            20,
+            21,
             'warn',
             'could not read data from database: Connection with sqlite database is not established. Check connection configuration.',
             'NfzQueuesCacheService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            21,
+            22,
             'log',
             '#findAll() - cache miss',
             'NfzQueuesService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            22,
+            23,
             'log',
             '#fetchAll() query = {"case":1,"benefitForChildren":"false","benefit":"endo","province":"6"}',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            23,
+            24,
             'log',
             '#fetchAll() network request no. 1, url = https://api.nfz.gov.pl/app-itl-api/queues?format=json&api-version=1.3&page=1&limit=25&case=1&benefitForChildren=false&benefit=endo&province=06',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            24,
+            25,
             'log',
             '#fetchAll() all queues = 142, pages = 6',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            25,
+            26,
             'log',
             '#fetchAll() network request no. 2, url = https://api.nfz.gov.pl/app-itl-api/queues?page=2&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            26,
+            27,
             'log',
             '#fetchAll() network request no. 3, url = https://api.nfz.gov.pl/app-itl-api/queues?page=3&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            27,
+            28,
             'log',
             '#fetchAll() network request no. 4, url = https://api.nfz.gov.pl/app-itl-api/queues?page=4&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            28,
+            29,
             'log',
             '#fetchAll() network request no. 5, url = https://api.nfz.gov.pl/app-itl-api/queues?page=5&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            29,
+            30,
             'log',
             '#fetchAll() network request no. 6, url = https://api.nfz.gov.pl/app-itl-api/queues?page=6&limit=25&format=json&case=1&province=06&benefit=endo',
             'NfzQueuesApiClientService',
           );
           expect(logger.aggregator).toHaveBeenNthCalledWith(
-            30,
+            31,
             'warn',
             'could not create a transaction for database: Connection with sqlite database is not established. Check connection configuration.',
             'NfzQueuesCacheService',

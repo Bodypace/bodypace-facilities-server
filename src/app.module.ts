@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { GeocoderModule } from './modules/geocoder/geocoder.module';
 import { NfzModule } from './modules/nfz/nfz.module';
 
 @Module({
@@ -10,6 +11,7 @@ import { NfzModule } from './modules/nfz/nfz.module';
       autoLoadEntities: true,
       synchronize: false,
     }),
+    GeocoderModule,
     NfzModule,
   ],
 })
