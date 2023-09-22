@@ -4,9 +4,7 @@
   </a>
 </p>
 
-<p align="center">
-  <span style="font-family: sans-serif; font-size: 30px; font-weight: lighter;">Bodypace facilities server</span>
-</p>
+# Bodypace facilities server
 
 <p align="center">
   <a href="https://github.com/Bodypace/bodypace-facilities-server/blob/master/LICENSE">
