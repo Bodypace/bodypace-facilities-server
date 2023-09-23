@@ -91,8 +91,8 @@ describe('NfzQueuesApiClientService ', () => {
         );
       });
 
-      it('should return correct list of queues', () => {
-        expect(
+      it('should return correct list of queues', async () => {
+        await expect(
           nfzQueuesApiClientService.fetchAll(query),
         ).resolves.toMatchSnapshot();
       });
@@ -166,8 +166,8 @@ describe('NfzQueuesApiClientService ', () => {
         );
       });
 
-      it('should return correct list of queues', () => {
-        expect(
+      it('should return correct list of queues', async () => {
+        await expect(
           nfzQueuesApiClientService.fetchAll(query),
         ).resolves.toMatchSnapshot();
       });
@@ -234,14 +234,14 @@ describe('NfzQueuesApiClientService ', () => {
         };
       });
 
-      it('should reject with error which explains that province has to be specified when locality is specified', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should reject with error which explains that province has to be specified when locality is specified', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() must specify province when locality is specified.',
         );
       });
 
-      it('should log that it was called and include query argument in log', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should log that it was called and include query argument in log', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() must specify province when locality is specified.',
         );
 
@@ -270,14 +270,14 @@ describe('NfzQueuesApiClientService ', () => {
         };
       });
 
-      it('should throw an error which explains that province code cannot be greater than 16', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should throw an error which explains that province code cannot be greater than 16', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
         );
       });
 
-      it('should log that it was called and include query argument in log', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should log that it was called and include query argument in log', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
         );
 
@@ -306,14 +306,14 @@ describe('NfzQueuesApiClientService ', () => {
         };
       });
 
-      it('should throw an error which explains that province code cannot be lesser than 1', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should throw an error which explains that province code cannot be lesser than 1', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
         );
       });
 
-      it('should log that it was called and include query argument in log', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should log that it was called and include query argument in log', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has province that is not in range [1, 16] (inclusive)',
         );
 
@@ -342,24 +342,24 @@ describe('NfzQueuesApiClientService ', () => {
         };
       });
 
-      it('should throw an error which explains that case has to be either 1 or 2', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should throw an error which explains that case has to be either 1 or 2', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
         );
-        expect(
+        await expect(
           nfzQueuesApiClientService.fetchAll({ ...query, case: 0 }),
         ).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
         );
-        expect(
+        await expect(
           nfzQueuesApiClientService.fetchAll({ ...query, case: -1 }),
         ).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
         );
       });
 
-      it('should log that it was called and include query argument in log', () => {
-        expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
+      it('should log that it was called and include query argument in log', async () => {
+        await expect(nfzQueuesApiClientService.fetchAll(query)).rejects.toBe(
           'query passed to NfzQueuesApiClientService#fetchAll() has case that is neither 1 nor 2',
         );
 

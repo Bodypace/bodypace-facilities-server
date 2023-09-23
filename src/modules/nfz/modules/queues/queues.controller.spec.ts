@@ -83,8 +83,8 @@ describe('NfzQueuesController', () => {
       expect(nfzQueuesService.findAll).toHaveBeenCalledWith(query);
     });
 
-    it('should return result of nfzQueuesService#findAll()', () => {
-      expect(nfzQueuesController.findAll(query)).resolves.toBe(
+    it('should return result of nfzQueuesService#findAll()', async () => {
+      await expect(nfzQueuesController.findAll(query)).resolves.toBe(
         mockedValues.service.findAll,
       );
     });
