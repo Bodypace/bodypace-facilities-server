@@ -1,6 +1,6 @@
 export interface GeocodedAddress {
-  queried_address: string;
-  located_address: string;
+  queriedAddress: string;
+  locatedAddress: string;
   longitude: number;
   latitude: number;
 }

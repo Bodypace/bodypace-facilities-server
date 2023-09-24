@@ -40,8 +40,8 @@ describe('GeocoderService', () => {
 
         it('should return hard coded location', () => {
           expect(geocoderService.geocode(fixtures.address!)).toStrictEqual({
-            queried_address: fixtures.address,
-            located_address: 'random hardcoded value',
+            queriedAddress: fixtures.address,
+            locatedAddress: 'random hardcoded value',
             longitude: 1337,
             latitude: 42,
           });

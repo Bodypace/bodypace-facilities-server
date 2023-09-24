@@ -40,8 +40,8 @@ const mockedValues: MockedValues = {
   },
   geocoder: {
     geocode: {
-      queried_address: 'fake queried address',
-      located_address: 'fake located address',
+      queriedAddress: 'fake queried address',
+      locatedAddress: 'fake located address',
       longitude: 7331,
       latitude: 24,
     },
