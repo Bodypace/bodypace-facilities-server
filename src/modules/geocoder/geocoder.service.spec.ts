@@ -1,13 +1,36 @@
 import { TestingModule, Test } from '@nestjs/testing';
 import { GeocoderService } from './geocoder.service';
+import { GoogleGeocoderClientModule } from './modules/google-client/google-client.module';
+import { GoogleGeocoderClientService } from './modules/google-client/google-client.service';
 
 interface Fixtures {
   addresses: string[];
   address?: string;
 }
 
+const mockedValues = {
+  googleGeocoder: {
+    fetch: {
+      locatedAddress: 'random hardcoded value',
+      longitude: 10101,
+      latitude: 202020,
+    },
+  },
+};
+
+function MockedGoogleGeocoderClientService() {
+  return {
+    fetch: jest.fn().mockImplementation((address: string) => ({
+      ...mockedValues.googleGeocoder.fetch,
+      queriedAddress: address,
+    })),
+  };
+}
+
 describe('GeocoderService', () => {
   let geocoderService: GeocoderService;
+  let googleGeocoderClientService: GoogleGeocoderClientService;
+
   const fixtures: Fixtures = {
     addresses: [
       'Avenue Appia 20, 1211 Genève 27, Switzerland',
@@ -20,14 +43,25 @@ describe('GeocoderService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [GoogleGeocoderClientModule],
       providers: [GeocoderService],
-    }).compile();
+    })
+      .overrideProvider(GoogleGeocoderClientService)
+      .useValue(MockedGoogleGeocoderClientService())
+      .compile();
 
     geocoderService = module.get<GeocoderService>(GeocoderService);
+    googleGeocoderClientService = module.get<GoogleGeocoderClientService>(
+      GoogleGeocoderClientService,
+    );
   });
 
   it('service should be defined', () => {
     expect(geocoderService).toBeDefined();
+  });
+
+  it('google geocoder client service should be defined', () => {
+    expect(googleGeocoderClientService).toBeDefined();
   });
 
   describe('geocode()', () => {
@@ -38,12 +72,19 @@ describe('GeocoderService', () => {
           fixtures.address = address;
         });
 
-        it('should return hard coded location', () => {
+        it('should call GoogleGeocoderClientService#fetch() with given address', () => {
+          geocoderService.geocode(fixtures.address!);
+          expect(googleGeocoderClientService.fetch).toHaveBeenCalledTimes(1);
+          expect(googleGeocoderClientService.fetch).toHaveBeenNthCalledWith(
+            1,
+            fixtures.address,
+          );
+        });
+
+        it('should return geocoded address returned by GoogleGeocoderClientService#fetch()', () => {
           expect(geocoderService.geocode(fixtures.address!)).toStrictEqual({
+            ...mockedValues.googleGeocoder.fetch,
             queriedAddress: fixtures.address,
-            locatedAddress: 'random hardcoded value',
-            longitude: 1337,
-            latitude: 42,
           });
         });
       },

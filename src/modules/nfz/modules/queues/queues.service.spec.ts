@@ -160,7 +160,7 @@ describe('NfzQueuesService', () => {
   });
 
   it('startup should log that dependencies are initialized (testing detail)', () => {
-    expect(logger.log).toHaveBeenCalledTimes(8);
+    expect(logger.log).toHaveBeenCalledTimes(9);
     expect(logger.log).toHaveBeenNthCalledWith(
       1,
       'TypeOrmModule dependencies initialized',
@@ -173,31 +173,36 @@ describe('NfzQueuesService', () => {
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       3,
-      'NfzQueuesApiClientModule dependencies initialized',
+      'GoogleGeocoderClientModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       4,
-      'HttpModule dependencies initialized',
+      'NfzQueuesApiClientModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       5,
-      'TypeOrmCoreModule dependencies initialized',
+      'HttpModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       6,
-      'TypeOrmModule dependencies initialized',
+      'TypeOrmCoreModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       7,
-      'NfzQueuesCacheModule dependencies initialized',
+      'TypeOrmModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       8,
+      'NfzQueuesCacheModule dependencies initialized',
+      'InstanceLoader',
+    );
+    expect(logger.log).toHaveBeenNthCalledWith(
+      9,
       'RootTestModule dependencies initialized',
       'InstanceLoader',
     );
@@ -263,7 +268,7 @@ describe('NfzQueuesService', () => {
         mockedValues.api.fetchAllGeocoded,
       );
       // 1
-      expect(logger.log).toHaveBeenCalledTimes(8 + 1);
+      expect(logger.log).toHaveBeenCalledTimes(9 + 1);
       expect(logger.log).toHaveBeenNthCalledWith(
         1,
         'TypeOrmModule dependencies initialized',
@@ -276,36 +281,41 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'NfzQueuesApiClientModule dependencies initialized',
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         4,
-        'HttpModule dependencies initialized',
+        'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         5,
-        'TypeOrmCoreModule dependencies initialized',
+        'HttpModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         6,
-        'TypeOrmModule dependencies initialized',
+        'TypeOrmCoreModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         7,
-        'NfzQueuesCacheModule dependencies initialized',
+        'TypeOrmModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         8,
-        'RootTestModule dependencies initialized',
+        'NfzQueuesCacheModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         9,
+        'RootTestModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        10,
         '#findAll() - cache miss',
         'NfzQueuesService',
       );
@@ -319,7 +329,7 @@ describe('NfzQueuesService', () => {
         mockedValues.api.fetchAllGeocoded,
       );
 
-      expect(logger.log).toHaveBeenCalledTimes(8 + 2);
+      expect(logger.log).toHaveBeenCalledTimes(9 + 2);
       expect(logger.log).toHaveBeenNthCalledWith(
         1,
         'TypeOrmModule dependencies initialized',
@@ -332,41 +342,46 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'NfzQueuesApiClientModule dependencies initialized',
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         4,
-        'HttpModule dependencies initialized',
+        'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         5,
-        'TypeOrmCoreModule dependencies initialized',
+        'HttpModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         6,
-        'TypeOrmModule dependencies initialized',
+        'TypeOrmCoreModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         7,
-        'NfzQueuesCacheModule dependencies initialized',
+        'TypeOrmModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         8,
-        'RootTestModule dependencies initialized',
+        'NfzQueuesCacheModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         9,
+        'RootTestModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        10,
         '#findAll() - cache miss',
         'NfzQueuesService',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
-        10,
+        11,
         '#findAll() - cache hit',
         'NfzQueuesService',
       );
@@ -382,7 +397,7 @@ describe('NfzQueuesService', () => {
         nfzQueuesService.findAll({ ...query, case: 2 }),
       ).resolves.toStrictEqual(mockedValues.api.fetchAllGeocoded);
 
-      expect(logger.log).toHaveBeenCalledTimes(8 + 2);
+      expect(logger.log).toHaveBeenCalledTimes(9 + 2);
       expect(logger.log).toHaveBeenNthCalledWith(
         1,
         'TypeOrmModule dependencies initialized',
@@ -395,41 +410,46 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'NfzQueuesApiClientModule dependencies initialized',
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         4,
-        'HttpModule dependencies initialized',
+        'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         5,
-        'TypeOrmCoreModule dependencies initialized',
+        'HttpModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         6,
-        'TypeOrmModule dependencies initialized',
+        'TypeOrmCoreModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         7,
-        'NfzQueuesCacheModule dependencies initialized',
+        'TypeOrmModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         8,
-        'RootTestModule dependencies initialized',
+        'NfzQueuesCacheModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         9,
+        'RootTestModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        10,
         '#findAll() - cache miss',
         'NfzQueuesService',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
-        10,
+        11,
         '#findAll() - cache miss',
         'NfzQueuesService',
       );
