@@ -41,6 +41,7 @@ Here is a current list of notes and generally things to do:
   - sqlite UPPER and LOWER could not handle polish characters on my system, therefore should check that, because it could result in sometimes not working ILIKE (now tests for case sensitivity use KATOWICE so there is no checking of polish characters) (btw, some sqlite config should probably seal it that LIKE is case insensitive, not I'm just trusting that the default conf is right)
 - refactors
   - test logs refactor (there is a lot of duplication)
+  - all tests should use logger.aggregate, not e.g. logger.log or logger.warn
   - cache service tests (there is a lot of them, their layout could be better, they take A LOT OF TIME TO RUN (like 8 minutes...))
 
 ## Installation
