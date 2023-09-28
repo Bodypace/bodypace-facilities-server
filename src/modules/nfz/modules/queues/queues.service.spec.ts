@@ -14,6 +14,7 @@ import { NfzQueuesApiQuery } from './modules/api-client/interfaces/query.interfa
 import { req_1_page_1 } from '../../../../../test/mocks/httpService/responses/req_1/response-page-1';
 import { DataSource } from 'typeorm';
 import { unlink } from 'node:fs/promises';
+import { expectToHaveBeenCalledWith } from '../../../../../test/utils/expect-logs-to-equal.util';
 
 function MockedLogger() {
   return {
@@ -95,6 +96,22 @@ describe('NfzQueuesService', () => {
   let logger: LoggerService;
   let query: NfzQueuesApiQuery;
 
+  const logInfo = {
+    startupLogLength: 10,
+    startupLog: [
+      ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
+      ['GeocoderModule dependencies initialized', 'InstanceLoader'],
+      ['GeocoderDatabaseModule dependencies initialized', 'InstanceLoader'],
+      ['NfzQueuesApiClientModule dependencies initialized', 'InstanceLoader'],
+      ['HttpModule dependencies initialized', 'InstanceLoader'],
+      ['GoogleGeocoderClientModule dependencies initialized', 'InstanceLoader'],
+      ['TypeOrmCoreModule dependencies initialized', 'InstanceLoader'],
+      ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
+      ['NfzQueuesCacheModule dependencies initialized', 'InstanceLoader'],
+      ['RootTestModule dependencies initialized', 'InstanceLoader'],
+    ],
+  };
+
   beforeEach(async () => {
     logger = MockedLogger();
     const module: TestingModule = await Test.createTestingModule({
@@ -160,57 +177,10 @@ describe('NfzQueuesService', () => {
   });
 
   it('startup should log that dependencies are initialized (testing detail)', () => {
-    expect(logger.log).toHaveBeenCalledTimes(10);
-    expect(logger.log).toHaveBeenNthCalledWith(
-      1,
-      'TypeOrmModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      2,
-      'GeocoderModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      3,
-      'GeocoderDatabaseModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      4,
-      'NfzQueuesApiClientModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      5,
-      'HttpModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      6,
-      'GoogleGeocoderClientModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      7,
-      'TypeOrmCoreModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      8,
-      'TypeOrmModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      9,
-      'NfzQueuesCacheModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      10,
-      'RootTestModule dependencies initialized',
-      'InstanceLoader',
-    );
+    expect(logger.log).toHaveBeenCalledTimes(logInfo.startupLogLength);
+    expectToHaveBeenCalledWith(logger.log, 1, logInfo.startupLogLength, [
+      ...logInfo.startupLog,
+    ]);
   });
 
   it('mocked api fetchAll and fetchAllGeocoded should differ by Lng and Lat', () => {
@@ -272,63 +242,11 @@ describe('NfzQueuesService', () => {
       await expect(nfzQueuesService.findAll(query)).resolves.toStrictEqual(
         mockedValues.api.fetchAllGeocoded,
       );
-      // 1
-      expect(logger.log).toHaveBeenCalledTimes(10 + 1);
-      expect(logger.log).toHaveBeenNthCalledWith(
-        1,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        2,
-        'GeocoderModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        3,
-        'GeocoderDatabaseModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
-        'NfzQueuesApiClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        5,
-        'HttpModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        6,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        7,
-        'TypeOrmCoreModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        8,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        9,
-        'NfzQueuesCacheModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        10,
-        'RootTestModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        11,
-        '#findAll() - cache miss',
-        'NfzQueuesService',
-      );
+      expect(logger.log).toHaveBeenCalledTimes(logInfo.startupLogLength + 1);
+      expectToHaveBeenCalledWith(logger.log, 1, logInfo.startupLogLength + 1, [
+        ...logInfo.startupLog,
+        ['#findAll() - cache miss', 'NfzQueuesService'],
+      ]);
     });
 
     it('should log one cache miss and one cache hit on two calls with the same query', async () => {
@@ -339,67 +257,12 @@ describe('NfzQueuesService', () => {
         mockedValues.api.fetchAllGeocoded,
       );
 
-      expect(logger.log).toHaveBeenCalledTimes(10 + 2);
-      expect(logger.log).toHaveBeenNthCalledWith(
-        1,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        2,
-        'GeocoderModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        3,
-        'GeocoderDatabaseModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
-        'NfzQueuesApiClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        5,
-        'HttpModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        6,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        7,
-        'TypeOrmCoreModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        8,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        9,
-        'NfzQueuesCacheModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        10,
-        'RootTestModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        11,
-        '#findAll() - cache miss',
-        'NfzQueuesService',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        12,
-        '#findAll() - cache hit',
-        'NfzQueuesService',
-      );
+      expect(logger.log).toHaveBeenCalledTimes(logInfo.startupLogLength + 2);
+      expectToHaveBeenCalledWith(logger.log, 1, logInfo.startupLogLength + 2, [
+        ...logInfo.startupLog,
+        ['#findAll() - cache miss', 'NfzQueuesService'],
+        ['#findAll() - cache hit', 'NfzQueuesService'],
+      ]);
     });
 
     it('should log cache miss two times on two calls, second call with different query', async () => {
@@ -412,67 +275,12 @@ describe('NfzQueuesService', () => {
         nfzQueuesService.findAll({ ...query, case: 2 }),
       ).resolves.toStrictEqual(mockedValues.api.fetchAllGeocoded);
 
-      expect(logger.log).toHaveBeenCalledTimes(10 + 2);
-      expect(logger.log).toHaveBeenNthCalledWith(
-        1,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        2,
-        'GeocoderModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        3,
-        'GeocoderDatabaseModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
-        'NfzQueuesApiClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        5,
-        'HttpModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        6,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        7,
-        'TypeOrmCoreModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        8,
-        'TypeOrmModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        9,
-        'NfzQueuesCacheModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        10,
-        'RootTestModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        11,
-        '#findAll() - cache miss',
-        'NfzQueuesService',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        12,
-        '#findAll() - cache miss',
-        'NfzQueuesService',
-      );
+      expect(logger.log).toHaveBeenCalledTimes(logInfo.startupLogLength + 2);
+      expectToHaveBeenCalledWith(logger.log, 1, logInfo.startupLogLength + 2, [
+        ...logInfo.startupLog,
+        ['#findAll() - cache miss', 'NfzQueuesService'],
+        ['#findAll() - cache miss', 'NfzQueuesService'],
+      ]);
     });
 
     it('should not order cache to write the same query and queues twice', async () => {
