@@ -8,7 +8,9 @@ export class GeocoderService {
     private readonly googleGeocoderClientService: GoogleGeocoderClientService,
   ) {}
 
-  geocode(address: GeocodedAddress['queriedAddress']): GeocodedAddress {
-    return this.googleGeocoderClientService.fetch(address);
+  async geocode(
+    address: GeocodedAddress['queriedAddress'],
+  ): Promise<GeocodedAddress> {
+    return await this.googleGeocoderClientService.fetch(address);
   }
 }

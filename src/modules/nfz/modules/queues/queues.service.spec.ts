@@ -173,17 +173,17 @@ describe('NfzQueuesService', () => {
     );
     expect(logger.log).toHaveBeenNthCalledWith(
       3,
-      'GoogleGeocoderClientModule dependencies initialized',
-      'InstanceLoader',
-    );
-    expect(logger.log).toHaveBeenNthCalledWith(
-      4,
       'NfzQueuesApiClientModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
-      5,
+      4,
       'HttpModule dependencies initialized',
+      'InstanceLoader',
+    );
+    expect(logger.log).toHaveBeenNthCalledWith(
+      5,
+      'GoogleGeocoderClientModule dependencies initialized',
       'InstanceLoader',
     );
     expect(logger.log).toHaveBeenNthCalledWith(
@@ -281,17 +281,17 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
         'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
-        5,
+        4,
         'HttpModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        5,
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
@@ -342,17 +342,17 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
         'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
-        5,
+        4,
         'HttpModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        5,
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
@@ -410,17 +410,17 @@ describe('NfzQueuesService', () => {
       );
       expect(logger.log).toHaveBeenNthCalledWith(
         3,
-        'GoogleGeocoderClientModule dependencies initialized',
-        'InstanceLoader',
-      );
-      expect(logger.log).toHaveBeenNthCalledWith(
-        4,
         'NfzQueuesApiClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(
-        5,
+        4,
         'HttpModule dependencies initialized',
+        'InstanceLoader',
+      );
+      expect(logger.log).toHaveBeenNthCalledWith(
+        5,
+        'GoogleGeocoderClientModule dependencies initialized',
         'InstanceLoader',
       );
       expect(logger.log).toHaveBeenNthCalledWith(

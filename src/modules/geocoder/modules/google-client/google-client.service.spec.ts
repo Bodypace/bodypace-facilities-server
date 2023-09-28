@@ -1,13 +1,18 @@
 import { TestingModule, Test } from '@nestjs/testing';
+import { HttpModule, HttpService } from '@nestjs/axios';
 import { GoogleGeocoderClientService } from './google-client.service';
+import { MockedHttpService } from '../../../../../test/mocks/httpService/http.service.mock';
 
 interface Fixtures {
   addresses: string[];
   address?: string;
+  apiKey?: string;
 }
 
 describe('GoogleGeocoderClientService', () => {
   let googleGeocoderClientService: GoogleGeocoderClientService;
+  let httpService: HttpService;
+
   const fixtures: Fixtures = {
     addresses: [
       'Avenue Appia 20, 1211 Genève 27, Switzerland',
@@ -20,16 +25,25 @@ describe('GoogleGeocoderClientService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       providers: [GoogleGeocoderClientService],
-    }).compile();
+    })
+      .overrideProvider(HttpService)
+      .useValue(MockedHttpService())
+      .compile();
 
     googleGeocoderClientService = module.get<GoogleGeocoderClientService>(
       GoogleGeocoderClientService,
     );
+    httpService = module.get<HttpService>(HttpService);
   });
 
   it('service should be defined', () => {
     expect(googleGeocoderClientService).toBeDefined();
+  });
+
+  it('httpService should be defined', () => {
+    expect(httpService).toBeDefined();
   });
 
   describe('fetch()', () => {
@@ -38,16 +52,43 @@ describe('GoogleGeocoderClientService', () => {
       (address) => {
         beforeEach(() => {
           fixtures.address = address;
+          fixtures.apiKey = 'mocked-google-geocoder-API-key-12354';
+          process.env['GOOGLE_GEOCODER_API_KEY'] = fixtures.apiKey;
         });
 
-        it('should return hard coded location', () => {
-          expect(
-            googleGeocoderClientService.fetch(fixtures.address!),
-          ).toStrictEqual({
+        it('address should be defined', () => {
+          expect(fixtures.address).toBeDefined();
+        });
+
+        it('apiKey should be defined', () => {
+          expect(fixtures.apiKey).toBeDefined();
+          expect(process.env['GOOGLE_GEOCODER_API_KEY']).toEqual(
+            fixtures.apiKey,
+          );
+        });
+
+        it('should call HttpService#axiosRef#get() with correct address and apiKey', async () => {
+          await googleGeocoderClientService.fetch(fixtures.address!);
+
+          expect(httpService.axiosRef.get).toHaveBeenCalledTimes(1);
+          expect(httpService.axiosRef.get).toHaveBeenCalledWith(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+              fixtures.address!,
+            )}&key=${fixtures.apiKey}`,
+          );
+        });
+
+        it('should return data received from HttpService#axiosRef#get()', async () => {
+          const response = await googleGeocoderClientService.fetch(
+            fixtures.address!,
+          );
+
+          expect(httpService.axiosRef.get).toHaveBeenCalledTimes(1);
+          expect(response).toStrictEqual({
             queriedAddress: fixtures.address,
-            locatedAddress: 'random hardcoded value',
-            longitude: 1337,
-            latitude: 42,
+            locatedAddress: 'mocked formatted addr',
+            longitude: 33441122,
+            latitude: 55667788,
           });
         });
       },

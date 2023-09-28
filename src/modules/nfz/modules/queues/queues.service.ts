@@ -28,7 +28,7 @@ export class NfzQueuesService {
     }
 
     for (const queue of queues) {
-      const geocodedAddress = this.geocoderService.geocode(
+      const geocodedAddress = await this.geocoderService.geocode(
         queue.attributes.address + ', ' + queue.attributes.locality + ', ŚLĄSK',
       );
       queue.attributes.longitude = geocodedAddress.longitude;

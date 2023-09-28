@@ -72,8 +72,8 @@ describe('GeocoderService', () => {
           fixtures.address = address;
         });
 
-        it('should call GoogleGeocoderClientService#fetch() with given address', () => {
-          geocoderService.geocode(fixtures.address!);
+        it('should call GoogleGeocoderClientService#fetch() with given address', async () => {
+          await geocoderService.geocode(fixtures.address!);
           expect(googleGeocoderClientService.fetch).toHaveBeenCalledTimes(1);
           expect(googleGeocoderClientService.fetch).toHaveBeenNthCalledWith(
             1,
@@ -81,8 +81,10 @@ describe('GeocoderService', () => {
           );
         });
 
-        it('should return geocoded address returned by GoogleGeocoderClientService#fetch()', () => {
-          expect(geocoderService.geocode(fixtures.address!)).toStrictEqual({
+        it('should return geocoded address returned by GoogleGeocoderClientService#fetch()', async () => {
+          await expect(
+            geocoderService.geocode(fixtures.address!),
+          ).resolves.toStrictEqual({
             ...mockedValues.googleGeocoder.fetch,
             queriedAddress: fixtures.address,
           });
