@@ -36,6 +36,7 @@ Here is a current list of notes and generally things to do:
   - cache service get() treating undefined, null, "" and not mentioned key the same way
 - fixes
   - fix onDelete cascade not working (entities are incorrectly written and generated migration does not mention it from what I saw)
+  - datetime() in entities does not work (it literally stores the string "datetime()" in createdAt column, instead of calling SQL function DATETIME())
   - cache service get has bug as it selects TERYT by province * 2 no left padded by '0', therefore e.g. for province = 4 it will select queues that have TERYT code like '8%' instead of '08%'.
   - do and remove all "TODO" comments from code
   - sqlite UPPER and LOWER could not handle polish characters on my system, therefore should check that, because it could result in sometimes not working ILIKE (now tests for case sensitivity use KATOWICE so there is no checking of polish characters) (btw, some sqlite config should probably seal it that LIKE is case insensitive, not I'm just trusting that the default conf is right)
