@@ -97,17 +97,18 @@ describe('NfzQueuesService', () => {
   let query: NfzQueuesApiQuery;
 
   const logInfo = {
-    startupLogLength: 10,
+    startupLogLength: 11,
     startupLog: [
       ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
       ['GeocoderModule dependencies initialized', 'InstanceLoader'],
-      ['GeocoderDatabaseModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesApiClientModule dependencies initialized', 'InstanceLoader'],
       ['HttpModule dependencies initialized', 'InstanceLoader'],
       ['GoogleGeocoderClientModule dependencies initialized', 'InstanceLoader'],
       ['TypeOrmCoreModule dependencies initialized', 'InstanceLoader'],
       ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
+      ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesCacheModule dependencies initialized', 'InstanceLoader'],
+      ['GeocoderDatabaseModule dependencies initialized', 'InstanceLoader'],
       ['RootTestModule dependencies initialized', 'InstanceLoader'],
     ],
   };

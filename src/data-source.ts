@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
+import { StoredGeocodedAddress } from './modules/geocoder/modules/database/entities/geocoded-address.entity';
 import {
   CachedNfzQueueStatisticsProviderData,
   CachedNfzQueueStatistics,
@@ -8,6 +9,7 @@ import {
   CachedNfzQueue,
 } from './modules/nfz/modules/queues/modules/cache/entities/cached-queue.entity';
 import { CachedNfzQueuesQuery } from './modules/nfz/modules/queues/modules/cache/entities/cached-queues-query.entity';
+import { CreateGeocoderDatabaseModuleTables1696099269393 } from './migrations/1696099269393-CreateGeocoderDatabaseModuleTables';
 import { CreateNfzQueuesCacheModuleTables1694955236774 } from './migrations/1694955236774-CreateNfzQueuesCacheModuleTables';
 
 export const AppDataSource = new DataSource({
@@ -16,6 +18,7 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   logging: true,
   entities: [
+    StoredGeocodedAddress,
     CachedNfzQueueStatisticsProviderData,
     CachedNfzQueueStatistics,
     CachedNfzQueueDates,
@@ -23,6 +26,9 @@ export const AppDataSource = new DataSource({
     CachedNfzQueue,
     CachedNfzQueuesQuery,
   ],
-  migrations: [CreateNfzQueuesCacheModuleTables1694955236774],
+  migrations: [
+    CreateGeocoderDatabaseModuleTables1696099269393,
+    CreateNfzQueuesCacheModuleTables1694955236774,
+  ],
   subscribers: [],
 });

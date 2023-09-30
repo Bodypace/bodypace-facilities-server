@@ -14,13 +14,13 @@ export class GeocoderService {
     address: GeocodedAddress['queriedAddress'],
   ): Promise<GeocodedAddress> {
     let geocodedAddress: GeocodedAddress | null =
-      this.geocoderDatabaseService.get(address);
+      await this.geocoderDatabaseService.get(address);
     if (geocodedAddress) {
       return geocodedAddress;
     }
 
     geocodedAddress = await this.googleGeocoderClientService.fetch(address);
-    this.geocoderDatabaseService.store(geocodedAddress);
+    await this.geocoderDatabaseService.store(geocodedAddress);
 
     return geocodedAddress;
   }

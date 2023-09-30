@@ -43,20 +43,21 @@ describe('NfzQueuesController (e2e)', () => {
   let url_2: string;
 
   const logInfo = {
-    startupLogLength: 16,
+    startupLogLength: 17,
     startupLog: [
       ['RootTestModule dependencies initialized', 'InstanceLoader'],
       ['AppModule dependencies initialized', 'InstanceLoader'],
       ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
       ['HttpModule dependencies initialized', 'InstanceLoader'],
-      ['GeocoderDatabaseModule dependencies initialized', 'InstanceLoader'],
       ['NfzModule dependencies initialized', 'InstanceLoader'],
       ['GoogleGeocoderClientModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesApiClientModule dependencies initialized', 'InstanceLoader'],
-      ['GeocoderModule dependencies initialized', 'InstanceLoader'],
       ['TypeOrmCoreModule dependencies initialized', 'InstanceLoader'],
       ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
+      ['TypeOrmModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesCacheModule dependencies initialized', 'InstanceLoader'],
+      ['GeocoderDatabaseModule dependencies initialized', 'InstanceLoader'],
+      ['GeocoderModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesModule dependencies initialized', 'InstanceLoader'],
       ['NfzQueuesController {/nfz}:', 'RoutesResolver'],
       ['Mapped {/nfz/queues, GET} route', 'RouterExplorer'],
