@@ -19,7 +19,7 @@
 
 Server that aggregates, stores and shares various kinds of information related to health. For now only queues to benefits provided by Poland public healthcare (NFZ).
 
-This project is not ready for production use, and development is paused until version 0.0.1 of [bodypace-personal-data-server](https://github.com/Bodypace/bodypace-personal-data-server) is finished. It should work tho if you want to try it out (all tests are passing but idk if setup on fresh machine is as simple as `npm init`).
+This project is not ready for production use, and development is paused until version 0.0.1 of [bodypace-personal-data-server](https://github.com/Bodypace/bodypace-personal-data-server) is finished. It should work tho if you want to try it out (all tests are passing but idk if setup on fresh machine is as simple as `npm install`).
 
 ## Features to do
 
