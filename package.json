@@ -1,7 +1,7 @@
 {
-  "name": "bodypace-facilities-server",
+  "name": "bodypace-public-data-server",
   "version": "0.0.1",
-  "description": "Bodypace API server that stores and shares data about various facilities related to healthcare.",
+  "description": "Server that aggregates, stores and shares various kinds of publicly available information related to health.",
   "author": "Bodypace",
   "private": true,
   "license": "Apache-2.0",
