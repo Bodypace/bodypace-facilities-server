@@ -4,7 +4,9 @@
   </a>
 </p>
 
-# Bodypace public data server
+<p align="center">
+  Collection and gateway to various healthcare related informations that are already available online to anyone.
+</p>
 
 <p align="center">
   <a href="https://github.com/Bodypace/bodypace-public-data-server/blob/master/LICENSE">
@@ -15,7 +17,7 @@
   <img alt="" src="https://img.shields.io/badge/status-not%20ready%20yet%20(under%20development)-yellow" />
 </p>
 
-## Description
+# Bodypace public data server
 
 Server that aggregates, stores and shares various kinds of information related to health. For now only queues to benefits provided by Poland public healthcare (NFZ).
 
